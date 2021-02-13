@@ -10,14 +10,22 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:qwerty-learner.helloWorld"
+    "onCommand:qwerty-learner.Start"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "qwerty-learner.helloWorld",
-        "title": "Hello World"
+        "command": "qwerty-learner.Start",
+        "title": "开始/暂停"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "qwerty-learner.Start",
+        "key": "ctrl+f1",
+        "mac": "ctrl+shift+q",
+        "when": "editorTextFocus"
       }
     ]
   },
@@ -30,13 +38,14 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.53.0",
     "@types/glob": "^7.1.3",
     "@types/mocha": "^8.0.4",
     "@types/node": "^12.11.7",
-    "eslint": "^7.19.0",
+    "@types/vscode": "^1.53.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.19.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "glob": "^7.1.6",
     "mocha": "^8.2.1",
     "typescript": "^4.1.3",
