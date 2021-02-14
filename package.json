@@ -3,6 +3,7 @@
   "displayName": "Qwerty Learner",
   "description": "LEAVE BLANK",
   "version": "0.0.1",
+  "publisher": "kaiyi",
   "engines": {
     "vscode": "^1.53.0"
   },
