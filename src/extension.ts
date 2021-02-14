@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
       order = 0
       wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
     }
-    wordBar.text = `${dicts[dictKey][0]} chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
+    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
     transBar.text = wordList[order].trans.join('；')
     updateGlobalState()
@@ -48,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (key === 'cet4') {
       dict = cet4
     } else {
-      dict = getDictFile(dicts[key][1])
+      dict = getDictFile(dicts[key].url)
     }
     dictKey = key
     refreshWordList()
@@ -111,7 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
   let changeChapterCom = vscode.commands.registerCommand('qwerty-learner.changeChapter', async () => {
     const inputChapter = await vscode.window.showQuickPick(
       range(1, totalChapters + 1).map((i) => i.toString()),
-      { placeHolder: `当前章节: ${chapter}` },
+      { placeHolder: `当前章节: ${chapter + 1}   共 ${totalChapters}章节` },
     )
     if (inputChapter !== undefined) {
       chapter = parseInt(inputChapter) - 1
@@ -122,10 +122,9 @@ export function activate(context: vscode.ExtensionContext) {
   let changeDictCom = vscode.commands.registerCommand('qwerty-learner.changeDict', async () => {
     const dictList: DictPickItem[] = []
     Object.keys(dicts).forEach((key) => {
-      const value = dicts[key]
-      dictList.push({ label: value[0], path: value[1], key: key })
+      dictList.push({ label: dicts[key].name, path: dicts[key].url, detail: dicts[key].description, key: key })
     })
-    const inputDict = await vscode.window.showQuickPick(dictList, { placeHolder: `当前字典: ${dicts[dictKey][0]}` })
+    const inputDict = await vscode.window.showQuickPick(dictList, { placeHolder: `当前字典: ${dicts[dictKey].name}` })
     if (inputDict !== undefined) {
       changeDict(inputDict.key)
     }

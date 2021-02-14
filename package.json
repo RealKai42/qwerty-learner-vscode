@@ -2,7 +2,7 @@
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
@@ -31,7 +31,7 @@
     "onCommand:qwerty-learner.changeChapter",
     "onCommand:qwerty-learner.changeDict"
   ],
-  "main": "./dist/extension.js",
+  "main": "./dist/extension",
   "contributes": {
     "commands": [
       {
@@ -77,14 +77,12 @@
     }
   },
   "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "vscode:prepublish": "webpack --mode production",
-    "webpack": "webpack --mode development",
-    "webpack-dev": "webpack --mode development --watch",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
     "test-compile": "tsc -p ./"
   },
   "devDependencies": {

@@ -33,7 +33,7 @@
 
 ### 一键启动
 
-**Mac** `Ctrl + Shift + Q`
+**Mac** `Control + Shift + Q`
 
 **Win** `Shift + Alt + Q`
 
@@ -83,5 +83,12 @@ Win: `ctrl + shift + p`
 
 - CET-4
 - CET-6
-
-其他词库陆续添加中
+- GMAT
+- GRE
+- IELTS
+- SAT
+- TOEFL
+- 考研英语
+- 专业四级英语
+- 专业八级英语
+- Coder Dict 程序员常用词
