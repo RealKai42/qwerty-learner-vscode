@@ -64,13 +64,13 @@ export function activate(context: vscode.ExtensionContext) {
     if (isStart) {
       const { uri } = e.document
       const { range, text, rangeLength } = e.contentChanges[0]
-      if (rangeLength === 0) {
+
+      if (text !== '') {
         // 删除用户输入的字符
         const newRange = new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character + 1)
         const editAction = new vscode.WorkspaceEdit()
         editAction.delete(uri, newRange)
         vscode.workspace.applyEdit(editAction)
-
         if (!hasWrong && text.length === 1) {
           soundPlayer('click')
           inputBar.text += text
