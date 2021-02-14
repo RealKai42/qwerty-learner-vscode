@@ -1,24 +1,8 @@
-import { off } from 'process'
 import * as vscode from 'vscode'
-import cet4 from './assets/dicts/CET4_T.json'
-
-function compareWord(word: string, input: string) {
-  // 错误返回错误索引，正确返回-2，未完成输入且无错误返回-1
-  for (let i = 0; i < word.length; i++) {
-    if (typeof input[i] !== 'undefined') {
-      if (word[i] !== input[i]) {
-        return i
-      }
-    } else {
-      return -1
-    }
-  }
-  return -2
-}
-
-function getConfig(key: string) {
-  return vscode.workspace.getConfiguration('qwerty-learner')[key]
-}
+import cet4 from './assets/CET4_T.json'
+import fs from 'fs'
+import { range } from 'lodash'
+import { compareWord, getConfig, dicts, DictPickItem, getDictFile } from './utils'
 
 export function activate(context: vscode.ExtensionContext) {
   const chapterLength = 20
@@ -26,21 +10,44 @@ export function activate(context: vscode.ExtensionContext) {
     hasWrong = false,
     chapter = 0,
     order = 0,
-    dict = cet4
+    dict = cet4,
+    dictKey = 'cet4'
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
+  let totalChapters = Math.ceil(dict.length / chapterLength)
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
 
   const setupWord = () => {
     if (order === chapterLength - 1) {
-      chapter += 1
+      if (chapter === totalChapters - 1) {
+        chapter = 0
+      } else {
+        chapter += 1
+      }
       order = 0
       wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
     }
-    wordBar.text = `chp.${chapter}  ${order}/${chapterLength}  ${wordList[order].name}`
+    wordBar.text = `chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
     transBar.text = wordList[order].trans.join('；')
+  }
+
+  const refreshWordList = () => {
+    totalChapters = Math.ceil(dict.length / chapterLength)
+    wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
+    order = 0
+    setupWord()
+  }
+
+  const changeDict = (key: string) => {
+    if (key === 'cet4') {
+      dict = cet4
+    } else {
+      dict = getDictFile(dicts[key][1])
+    }
+    dictKey = key
+    refreshWordList()
   }
 
   vscode.workspace.onDidChangeTextDocument((e) => {
@@ -74,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   })
 
-  let start = vscode.commands.registerCommand('qwerty-learner.Start', () => {
+  let startCom = vscode.commands.registerCommand('qwerty-learner.Start', () => {
     isStart = !isStart
     if (isStart) {
       wordBar.show()
@@ -88,8 +95,35 @@ export function activate(context: vscode.ExtensionContext) {
     }
   })
 
-  context.subscriptions.push(start)
+  let changeChapterCom = vscode.commands.registerCommand('qwerty-learner.changeChapter', async () => {
+    const inputChapter = await vscode.window.showQuickPick(
+      range(1, totalChapters + 1).map((i) => i.toString()),
+      { placeHolder: `当前章节: ${chapter}` },
+    )
+    if (inputChapter !== undefined) {
+      chapter = parseInt(inputChapter)
+      refreshWordList()
+    }
+  })
+
+  let changeDictCom = vscode.commands.registerCommand('qwerty-learner.changeDict', async () => {
+    const dictList: DictPickItem[] = []
+    Object.keys(dicts).forEach((key) => {
+      const value = dicts[key]
+      dictList.push({ label: value[0], path: value[1], key: key })
+    })
+    const inputDict = await vscode.window.showQuickPick(dictList, { placeHolder: `当前字典: ${dicts[dictKey][0]}` })
+    if (inputDict !== undefined) {
+      changeDict(inputDict.key)
+    }
+  })
+
+  context.subscriptions.push(startCom)
+  context.subscriptions.push(changeChapterCom)
+  context.subscriptions.push(changeDictCom)
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  console.log('我裂开了')
+}

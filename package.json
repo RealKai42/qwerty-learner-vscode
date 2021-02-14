@@ -10,14 +10,24 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:qwerty-learner.Start"
+    "onCommand:qwerty-learner.Start",
+    "onCommand:qwerty-learner.changeChapter",
+    "onCommand:qwerty-learner.changeDict"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "qwerty-learner.Start",
-        "title": "开始/暂停"
+        "title": "Qwerty Learner Start/Pause"
+      },
+      {
+        "command": "qwerty-learner.changeChapter",
+        "title": "Qwerty Learner Change Chapter"
+      },
+      {
+        "command": "qwerty-learner.changeDict",
+        "title": "Qwerty Learner Change Dictionary"
       }
     ],
     "keybindings": [
@@ -54,6 +64,7 @@
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
+    "@types/lodash": "^4.14.168",
     "@types/mocha": "^8.0.4",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.53.0",
@@ -65,5 +76,8 @@
     "mocha": "^8.2.1",
     "typescript": "^4.1.3",
     "vscode-test": "^1.5.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20"
   }
 }
