@@ -40,7 +40,6 @@ export function activate(context: vscode.ExtensionContext) {
   function refreshWordList() {
     totalChapters = Math.ceil(dict.length / chapterLength)
     wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
-    order = 0
     setupWord()
   }
 
@@ -115,6 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
     )
     if (inputChapter !== undefined) {
       chapter = parseInt(inputChapter) - 1
+      order = 0
       refreshWordList()
     }
   })
@@ -126,6 +126,8 @@ export function activate(context: vscode.ExtensionContext) {
     })
     const inputDict = await vscode.window.showQuickPick(dictList, { placeHolder: `当前字典: ${dicts[dictKey].name}` })
     if (inputDict !== undefined) {
+      chapter = 0
+      order = 0
       changeDict(inputDict.key)
     }
   })
