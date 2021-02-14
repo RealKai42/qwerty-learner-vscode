@@ -1,15 +1,16 @@
 import * as vscode from 'vscode'
 import cet4 from './assets/CET4_T.json'
-import fs from 'fs'
 import { range } from 'lodash'
 import { compareWord, getConfig, dicts, DictPickItem, getDictFile } from './utils'
 
 export function activate(context: vscode.ExtensionContext) {
+  const globalState = context.globalState
+  globalState.setKeysForSync(['chapter', 'order', 'dictKey'])
   const chapterLength = 20
   let isStart = false,
     hasWrong = false,
-    chapter = 0,
-    order = 0,
+    chapter = globalState.get('chapter', 0),
+    order = globalState.get('order', 0),
     dict = cet4,
     dictKey = 'cet4'
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
@@ -17,8 +18,9 @@ export function activate(context: vscode.ExtensionContext) {
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
+  changeDict(globalState.get('dictKey', 'cet4'))
 
-  const setupWord = () => {
+  function setupWord() {
     if (order === chapterLength - 1) {
       if (chapter === totalChapters - 1) {
         chapter = 0
@@ -28,19 +30,20 @@ export function activate(context: vscode.ExtensionContext) {
       order = 0
       wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
     }
-    wordBar.text = `chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
+    wordBar.text = `${dicts[dictKey][0]} chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
     transBar.text = wordList[order].trans.join('；')
+    updateGlobalState()
   }
 
-  const refreshWordList = () => {
+  function refreshWordList() {
     totalChapters = Math.ceil(dict.length / chapterLength)
     wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
     order = 0
     setupWord()
   }
 
-  const changeDict = (key: string) => {
+  function changeDict(key: string) {
     if (key === 'cet4') {
       dict = cet4
     } else {
@@ -48,6 +51,12 @@ export function activate(context: vscode.ExtensionContext) {
     }
     dictKey = key
     refreshWordList()
+  }
+
+  function updateGlobalState() {
+    globalState.update('chapter', chapter)
+    globalState.update('order', order)
+    globalState.update('dictKey', dictKey)
   }
 
   vscode.workspace.onDidChangeTextDocument((e) => {
