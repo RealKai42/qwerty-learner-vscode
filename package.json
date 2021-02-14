@@ -15,7 +15,7 @@
     "onCommand:qwerty-learner.changeChapter",
     "onCommand:qwerty-learner.changeDict"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -61,12 +61,15 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "vscode:prepublish": "webpack --mode production",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "test-compile": "tsc -p ./"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
@@ -85,6 +88,9 @@
   },
   "dependencies": {
     "lodash": "^4.17.20",
-    "node-wav-player": "^0.2.0"
+    "node-wav-player": "^0.2.0",
+    "ts-loader": "^8.0.17",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0"
   }
 }
