@@ -16,6 +16,10 @@ function compareWord(word: string, input: string) {
   return -2
 }
 
+function getConfig(key: string) {
+  return vscode.workspace.getConfiguration('qwerty-learner')[key]
+}
+
 export function activate(context: vscode.ExtensionContext) {
   const chapterLength = 20
   let isStart = false,
@@ -58,12 +62,12 @@ export function activate(context: vscode.ExtensionContext) {
             setupWord()
           } else if (result >= 0) {
             hasWrong = true
-            inputBar.color = '#EE3D11'
+            inputBar.color = getConfig('highlightWrongColor')
             setTimeout(() => {
               hasWrong = false
               inputBar.color = undefined
               setupWord()
-            }, 500)
+            }, getConfig('highlightWrongDelay'))
           }
         }
       }

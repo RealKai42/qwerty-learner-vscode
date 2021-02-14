@@ -27,7 +27,22 @@
         "mac": "ctrl+shift+q",
         "when": "editorTextFocus"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Qwerty Learner",
+      "properties": {
+        "qwerty-learner.highlightWrongColor": {
+          "type": "string",
+          "default": "#EE3D11",
+          "description": "输入错误时单词的颜色"
+        },
+        "qwerty-learner.highlightWrongDelay": {
+          "type": "number",
+          "default": 400,
+          "description": "输入错误时清空输入的延迟时间"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
