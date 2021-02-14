@@ -4,7 +4,6 @@ import cet4 from './assets/dicts/CET4_T.json'
 
 function compareWord(word: string, input: string) {
   // 错误返回错误索引，正确返回-2，未完成输入且无错误返回-1
-  // console.log(word, input)
   for (let i = 0; i < word.length; i++) {
     if (typeof input[i] !== 'undefined') {
       if (word[i] !== input[i]) {
@@ -15,13 +14,6 @@ function compareWord(word: string, input: string) {
     }
   }
   return -2
-}
-
-function replaceString(str: string, index: number, char: string) {
-  return str.substring(0, index) + char + str.substring(index + 1)
-}
-function highlightError(str: string, errorIndex: number) {
-  return `${str.substring(0, errorIndex)} _${str[errorIndex]}_ ${str.substring(errorIndex + 1)}`
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -66,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
             setupWord()
           } else if (result >= 0) {
             hasWrong = true
-            inputBar.text = highlightError(inputBar.text, result)
+            inputBar.text += '❌'
             setTimeout(() => {
               hasWrong = false
               setupWord()
