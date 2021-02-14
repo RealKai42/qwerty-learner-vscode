@@ -1057,6 +1057,11 @@ natural-compare@^1.4.0:
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
+node-wav-player@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/node-wav-player/-/node-wav-player-0.2.0.tgz#d851e1eb529495905c4c00f9721dcb07d27d58c2"
+  integrity sha512-prtXKnjex7XciravRUC39Z+h1dBDxOwCc3TLvjqk+9Yi8dbH0T6c0Cb6u7lNAEe/8J3lX7JWFXXeBgO2krMX1Q==
+
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"

@@ -30,7 +30,7 @@ export const dicts: Dicts = {
 }
 
 export function getDictFile(dictPath: string) {
-  const filePath = path.join(__dirname, '..', 'dicts', dictPath)
+  const filePath = path.join(__dirname, '..', 'assets/dicts', dictPath)
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
 }
 

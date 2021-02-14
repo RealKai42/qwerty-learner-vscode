@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 import cet4 from './assets/CET4_T.json'
 import { range } from 'lodash'
 import { compareWord, getConfig, dicts, DictPickItem, getDictFile } from './utils'
+import { soundPlayer } from './sound'
 
 export function activate(context: vscode.ExtensionContext) {
   const globalState = context.globalState
@@ -71,14 +72,17 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.workspace.applyEdit(editAction)
 
         if (!hasWrong && text.length === 1) {
+          soundPlayer('click')
           inputBar.text += text
           const result = compareWord(wordList[order].name, inputBar.text)
           if (result === -2) {
             order++
+            soundPlayer('success')
             setupWord()
           } else if (result >= 0) {
             hasWrong = true
             inputBar.color = getConfig('highlightWrongColor')
+            soundPlayer('wrong')
             setTimeout(() => {
               hasWrong = false
               inputBar.color = undefined
@@ -110,7 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
       { placeHolder: `当前章节: ${chapter}` },
     )
     if (inputChapter !== undefined) {
-      chapter = parseInt(inputChapter)
+      chapter = parseInt(inputChapter) - 1
       refreshWordList()
     }
   })

@@ -50,6 +50,11 @@
           "type": "number",
           "default": 400,
           "description": "输入错误时清空输入的延迟时间"
+        },
+        "qwerty-learner.keySound": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否开启键盘音"
         }
       }
     }
@@ -78,6 +83,7 @@
     "vscode-test": "^1.5.0"
   },
   "dependencies": {
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "node-wav-player": "^0.2.0"
   }
 }
