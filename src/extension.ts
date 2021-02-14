@@ -58,9 +58,10 @@ export function activate(context: vscode.ExtensionContext) {
             setupWord()
           } else if (result >= 0) {
             hasWrong = true
-            inputBar.text += '❌'
+            inputBar.color = '#EE3D11'
             setTimeout(() => {
               hasWrong = false
+              inputBar.color = undefined
               setupWord()
             }, 500)
           }
