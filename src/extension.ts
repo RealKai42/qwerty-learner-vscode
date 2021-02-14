@@ -128,6 +128,7 @@ export function activate(context: vscode.ExtensionContext) {
     const inputDict = await vscode.window.showQuickPick(dictList, { placeHolder: `当前字典: ${dicts[dictKey][0]}` })
     if (inputDict !== undefined) {
       changeDict(inputDict.key)
+      b
     }
   })
 

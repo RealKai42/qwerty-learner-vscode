@@ -1,15 +1,31 @@
 {
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
-  "description": "LEAVE BLANK",
-  "version": "0.0.1",
+  "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
+  "version": "0.0.2",
   "publisher": "kaiyi",
+  "icon": "docs/vsc-logo.png",
   "engines": {
     "vscode": "^1.53.0"
   },
+  "keywords": [
+    "英语",
+    "单词",
+    "记忆",
+    "打字",
+    "摸鱼"
+  ],
   "categories": [
     "Other"
   ],
+  "bugs": {
+    "url": "https://github.com/Kaiyiwing/qwerty-leaner-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kaiyiwing/qwerty-leaner-vscode/"
+  },
+  "homepage": "https://github.com/Kaiyiwing/qwerty-leaner-vscode",
   "activationEvents": [
     "onCommand:qwerty-learner.Start",
     "onCommand:qwerty-learner.changeChapter",
@@ -34,7 +50,7 @@
     "keybindings": [
       {
         "command": "qwerty-learner.Start",
-        "key": "ctrl+f1",
+        "key": "shift+alt+q",
         "mac": "ctrl+shift+q",
         "when": "editorTextFocus"
       }
