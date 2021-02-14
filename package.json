@@ -8,6 +8,7 @@
   "engines": {
     "vscode": "^1.53.0"
   },
+  "license": "MIT",
   "keywords": [
     "英语",
     "单词",
