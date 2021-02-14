@@ -2,7 +2,7 @@
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
@@ -19,13 +19,13 @@
     "Other"
   ],
   "bugs": {
-    "url": "https://github.com/Kaiyiwing/qwerty-leaner-vscode/issues"
+    "url": "https://github.com/Kaiyiwing/qwerty-learner-vscode/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kaiyiwing/qwerty-leaner-vscode/"
+    "url": "https://github.com/Kaiyiwing/qwerty-learner-vscode/"
   },
-  "homepage": "https://github.com/Kaiyiwing/qwerty-leaner-vscode",
+  "homepage": "https://github.com/Kaiyiwing/qwerty-learner-vscode",
   "activationEvents": [
     "onCommand:qwerty-learner.Start",
     "onCommand:qwerty-learner.changeChapter",

@@ -53,6 +53,32 @@
 - Change Dictionary 可以切换字典
 - Start/Pause 可以开关插件，功能等价于一键启动快捷键
 
+命令面板快捷键  
+Mac: `cmd + shift + p`  
+Win: `ctrl + shift + p`
+
+### 进阶配置
+
+可以在设置面板查找关键字 “Qwerty” 修改设置
+
+```
+"qwerty-learner.highlightWrongColor": {
+  "type": "string",
+  "default": "#EE3D11",
+  "description": "输入错误时单词的颜色"
+},
+"qwerty-learner.highlightWrongDelay": {
+  "type": "number",
+  "default": 400,
+  "description": "输入错误时清空输入的延迟时间"
+},
+"qwerty-learner.keySound": {
+  "type": "boolean",
+  "default": true,
+  "description": "是否开启键盘音"
+}
+```
+
 ## 📕 词库列表
 
 - CET-4
