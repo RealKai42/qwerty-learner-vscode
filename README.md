@@ -6,13 +6,13 @@
   为键盘工作者设计的单词记忆与英语肌肉记忆锻炼软件  VSCode 摸🐟版
 </p>
 <div align=center>
-<img  src="https://github.com/Kaiyiwing/qwerty-leaner-vscode/blob/master/docs/Screenshot.png"/>
+<img  src="https://github.com/Kaiyiwing/qwerty-leaner-vscode/blob/master/docs/Screenshot.png?raw=true"/>
 </div>
 
 ## 💡 演示
 
 <div align=center>
-<img  src="https://github.com/Kaiyiwing/qwerty-leaner-vscode/blob/master/docs/typing.gif"/>
+<img  src="https://github.com/Kaiyiwing/qwerty-leaner-vscode/blob/master/docs/typing.gif?raw=true"/>
 </div>
 
 ## 📸 安装
@@ -46,7 +46,7 @@
 打开 VSCode 命令面板，通过 “Qwerty” 前缀过滤，即可发现插件内置的命令。
 
 <div align=center>
-<img  src="https://github.com/Kaiyiwing/qwerty-leaner-vscode/blob/master/docs/command.png"/>
+<img  src="https://github.com/Kaiyiwing/qwerty-leaner-vscode/blob/master/docs/command.png?raw=true"/>
 </div>
 
 - Change Chapter 可以切换章节
