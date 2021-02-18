@@ -2,11 +2,11 @@
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
-    "vscode": "^1.53.0"
+    "vscode": "^1.42.0"
   },
   "license": "MIT",
   "keywords": [
