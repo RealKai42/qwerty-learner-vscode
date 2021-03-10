@@ -46,7 +46,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
-    transBar.text = phonetic + '  ' + wordList[order].trans.join('；')
+    transBar.text = phonetic ? `/${phonetic}/  ` : ''
+    transBar.text += wordList[order].trans.join('; ')
     updateGlobalState()
   }
 
