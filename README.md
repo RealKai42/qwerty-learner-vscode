@@ -84,6 +84,16 @@ Win: `ctrl + shift + p`
   "type": "boolean",
   "default": true,
   "description": "是否开启键盘音"
+},
+"qwerty-learner.phonetic": {
+  "type": "string",
+  "enum": [
+    "us",
+    "uk",
+    "close"
+  ],
+  "default": "close",
+  "description": "是否开启音标"
 }
 ```
 

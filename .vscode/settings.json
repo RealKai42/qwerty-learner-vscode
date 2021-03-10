@@ -13,5 +13,6 @@
     "source.fixAll.eslint": true
   },
   "css.lint.unknownAtRules": "ignore",
-  "css.validate": false
+  "css.validate": false,
+  "cSpell.words": ["usphone", "ukphone"]
 }

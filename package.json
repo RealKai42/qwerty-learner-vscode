@@ -2,7 +2,7 @@
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
@@ -73,6 +73,16 @@
           "type": "boolean",
           "default": true,
           "description": "是否开启键盘音"
+        },
+        "qwerty-learner.phonetic": {
+          "type": "string",
+          "enum": [
+            "us",
+            "uk",
+            "close"
+          ],
+          "default": "close",
+          "description": "是否开启音标"
         }
       }
     }

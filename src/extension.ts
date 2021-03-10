@@ -31,9 +31,22 @@ export function activate(context: vscode.ExtensionContext) {
       order = 0
       wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
     }
+    let phonetic = ''
+    switch (getConfig('phonetic')) {
+      case 'us':
+        phonetic = wordList[order].usphone || ''
+        break
+      case 'uk':
+        phonetic = wordList[order].ukphone || ''
+        break
+      case 'close':
+        phonetic = ''
+        break
+    }
+
     wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
-    transBar.text = wordList[order].trans.join('；')
+    transBar.text = phonetic + '  ' + wordList[order].trans.join('；')
     updateGlobalState()
   }
 
