@@ -1,3 +1,7 @@
+<div align=center>
+<img  src="docs/logo.svg"/>
+</div>
+
 <h1 align="center">
  Qwerty Learner VSCode
 </h1>
