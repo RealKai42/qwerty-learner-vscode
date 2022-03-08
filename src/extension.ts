@@ -7,11 +7,13 @@ import { soundPlayer } from './sound'
 export function activate(context: vscode.ExtensionContext) {
   const globalState = context.globalState
   globalState.setKeysForSync(['chapter', 'order', 'dictKey'])
-  const chapterLength = 20
+  const chapterLength = getConfig('chapterLength')
+  let prevOrder = globalState.get('order', 0)
+  if (prevOrder > chapterLength) { prevOrder = 0 }
   let isStart = false,
     hasWrong = false,
     chapter = globalState.get('chapter', 0),
-    order = globalState.get('order', 0),
+    order = prevOrder,
     dict = cet4,
     dictKey = 'cet4'
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
@@ -22,11 +24,11 @@ export function activate(context: vscode.ExtensionContext) {
   changeDict(globalState.get('dictKey', 'cet4'))
 
   function setupWord() {
-    if (order === chapterLength - 1) {
+    if (order === chapterLength) {
       if (chapter === totalChapters - 1) {
         chapter = 0
       } else {
-        chapter += 1
+        if (!getConfig('reWrite')) { chapter += 1 }
       }
       order = 0
       wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
@@ -44,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
         break
     }
 
-    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order}/${chapterLength}  ${wordList[order].name}`
+    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
     transBar.text += wordList[order].trans.join('; ')
