@@ -7,7 +7,7 @@ import { soundPlayer } from './sound'
 export function activate(context: vscode.ExtensionContext) {
   const globalState = context.globalState
   globalState.setKeysForSync(['chapter', 'order', 'dictKey'])
-  const chapterLength = getConfig('chapterLength')
+  let chapterLength = getConfig('chapterLength')
   let prevOrder = globalState.get('order', 0)
   if (prevOrder > chapterLength) { prevOrder = 0 }
   let isStart = false,
@@ -25,10 +25,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   function setupWord() {
     if (order === chapterLength) {
-      if (chapter === totalChapters - 1) {
-        chapter = 0
-      } else {
-        if (!getConfig('reWrite')) { chapter += 1 }
+      if (!getConfig('reWrite')) {
+        if (chapter === totalChapters - 1) {
+          chapter = 0
+        } else {
+          chapter += 1
+        }
       }
       order = 0
       wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
@@ -75,12 +77,23 @@ export function activate(context: vscode.ExtensionContext) {
     globalState.update('dictKey', dictKey)
   }
 
+  vscode.workspace.onDidChangeConfiguration(function(event) {
+    const configList = ['qwerty-learner.chapterLength'];
+    const affected = configList.some(item => event.affectsConfiguration(item));
+    if (affected) {
+      chapter = 0
+      order = 0
+      chapterLength = getConfig('chapterLength')
+      refreshWordList()
+    }
+  });
+
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (isStart) {
       const { uri } = e.document
       const { range, text, rangeLength } = e.contentChanges[0]
 
-      if (text !== '') {
+      if (text !== '' && text.length === 1) {
         // 删除用户输入的字符
         const newRange = new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character + 1)
         const editAction = new vscode.WorkspaceEdit()
