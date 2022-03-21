@@ -2,7 +2,7 @@
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
@@ -83,6 +83,18 @@
           ],
           "default": "close",
           "description": "是否开启音标"
+        },
+        "qwerty-learner.chapterLength": {
+          "type": "integer",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "每个章节包含的单词数量"
+        },
+        "qwerty-learner.reWrite": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否开启罚抄模式"
         }
       }
     }
@@ -107,7 +119,7 @@
     "eslint": "^7.19.0",
     "eslint-plugin-prettier": "^3.3.1",
     "glob": "^7.1.6",
-    "mocha": "^8.2.1",
+    "mocha": "^9.2.1",
     "typescript": "^4.1.3",
     "vscode-test": "^1.5.0"
   },
