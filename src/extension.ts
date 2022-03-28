@@ -91,6 +91,9 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (isStart) {
       const { uri } = e.document
+      // 避免破坏配置文件
+      if (uri.scheme.indexOf("vscode") !== -1) { return }
+
       const { range, text, rangeLength } = e.contentChanges[0]
 
       if (text !== '' && text.length === 1) {
@@ -99,7 +102,7 @@ export function activate(context: vscode.ExtensionContext) {
         const editAction = new vscode.WorkspaceEdit()
         editAction.delete(uri, newRange)
         vscode.workspace.applyEdit(editAction)
-        if (!hasWrong && text.length === 1) {
+        if (!hasWrong) {
           soundPlayer('click')
           inputBar.text += text
           const result = compareWord(wordList[order].name, inputBar.text)
