@@ -71,8 +71,6 @@ Win: `ctrl + shift + p`
 
 ### 进阶配置
 
-**⚠️ 切记修改配置前请关闭本插件**
-
 可以在设置面板查找关键字 “Qwerty” 修改设置
 
 ```
@@ -102,8 +100,10 @@ Win: `ctrl + shift + p`
   "description": "是否开启音标"
 },
 "qwerty-learner.chapterLength": {
-  "type": "number",
+  "type": "integer",
   "default": 20,
+  "minimum": 1,
+  "maximum": 100,
   "description": "每个章节包含的单词数量"
 },
 "qwerty-learner.reWrite": {
