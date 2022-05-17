@@ -3,6 +3,7 @@ import cet4 from './assets/CET4_T.json'
 import { range } from 'lodash'
 import { compareWord, getConfig, dicts, DictPickItem, getDictFile } from './utils'
 import { soundPlayer } from './sound'
+import { voicePlayer, getVoiceType } from './voice'
 
 export function activate(context: vscode.ExtensionContext) {
   const globalState = context.globalState
@@ -15,7 +16,9 @@ export function activate(context: vscode.ExtensionContext) {
     chapter = globalState.get('chapter', 0),
     order = prevOrder,
     dict = cet4,
-    dictKey = 'cet4'
+    dictKey = 'cet4',
+    voiceType = getVoiceType(),
+    isLock = Boolean(voiceType)
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
   let totalChapters = Math.ceil(dict.length / chapterLength)
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
@@ -52,6 +55,13 @@ export function activate(context: vscode.ExtensionContext) {
     inputBar.text = ''
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
     transBar.text += wordList[order].trans.join('; ')
+    // 加锁防止狂输并错误的情况
+    if (voiceType) { isLock = true }
+    setTimeout(() => {
+      // 会阻塞进程
+      voicePlayer(wordList[order].name, voiceType)
+      isLock = false
+    }, 100)
     updateGlobalState()
   }
 
@@ -89,7 +99,7 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   vscode.workspace.onDidChangeTextDocument((e) => {
-    if (isStart) {
+    if (isStart && !isLock) {
       const { uri } = e.document
       // 避免破坏配置文件
       if (uri.scheme.indexOf("vscode") !== -1) { return }
