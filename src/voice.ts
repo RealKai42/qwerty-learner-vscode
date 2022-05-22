@@ -1,10 +1,10 @@
 const { playerPlay } = require("node-loader!./rodio/index.node");
 import { getConfig } from './utils'
 
-type voiceType = 'us' | 'uk' | 'close'
+type VoiceType = 'us' | 'uk' | 'close'
 
 export const getVoiceType = () => {
-  const voiceType: voiceType = getConfig('voiceType')
+  const voiceType: VoiceType = getConfig('voiceType')
   let type
   switch (voiceType) {
     case 'us':
