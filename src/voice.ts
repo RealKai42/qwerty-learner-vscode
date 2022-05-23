@@ -4,7 +4,16 @@ interface NativeModule {
   playerPlay(voiceUrl: string): void
 }
 
-const PLATFORM = platform()
+let PLATFORM = 'mac'
+switch (platform()) {
+  case 'win32':
+    PLATFORM = 'win32'
+    break
+  default:
+    PLATFORM = 'mac'
+    break
+}
+
 const NATIVE = require(`node-loader!./rodio/${PLATFORM}.node`) as NativeModule
 
 type VoiceType = 'us' | 'uk' | 'close'
