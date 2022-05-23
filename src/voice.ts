@@ -1,5 +1,11 @@
-const { playerPlay } = require("node-loader!./rodio/index.node");
 import { getConfig } from './utils'
+import { platform } from 'os'
+interface NativeModule {
+  playerPlay(voiceUrl: string): void
+}
+
+const PLATFORM = platform()
+const NATIVE = require(`node-loader!./rodio/${PLATFORM}.node`) as NativeModule
 
 type VoiceType = 'us' | 'uk' | 'close'
 
@@ -25,6 +31,6 @@ export const getVoiceType = () => {
 
 export const voicePlayer = (word: string, type: string | number) => {
   if (type) {
-    playerPlay(`https://dict.youdao.com/dictvoice?audio=${word}&type=${type}`)
+    NATIVE.playerPlay(`https://dict.youdao.com/dictvoice?audio=${word}&type=${type}`)
   }
 }
