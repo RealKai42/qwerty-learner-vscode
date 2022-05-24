@@ -17,7 +17,8 @@ export function activate(context: vscode.ExtensionContext) {
     order = prevOrder,
     dict = cet4,
     dictKey = 'cet4',
-    voiceType = getVoiceType()
+    voiceType = getVoiceType(),
+    voiceLock = false
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
   let totalChapters = Math.ceil(dict.length / chapterLength)
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
@@ -54,7 +55,12 @@ export function activate(context: vscode.ExtensionContext) {
     inputBar.text = ''
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
     transBar.text += wordList[order].trans.join('; ')
-    voicePlayer(wordList[order].name, voiceType);
+    if (voiceType && !voiceLock) {
+      voiceLock = true
+      voicePlayer(wordList[order].name, voiceType, () => {
+        voiceLock = false
+      });
+    }
     updateGlobalState()
   }
 

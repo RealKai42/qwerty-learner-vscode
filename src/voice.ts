@@ -1,7 +1,7 @@
 import { getConfig } from './utils'
 import { platform } from 'os'
 interface NativeModule {
-  playerPlay(voiceUrl: string): void
+  playerPlay(voiceUrl: string, callback: () => void): void
 }
 
 let PLATFORM = 'mac'
@@ -38,8 +38,6 @@ export const getVoiceType = () => {
   return type
 }
 
-export const voicePlayer = (word: string, type: string | number) => {
-  if (type) {
-    NATIVE.playerPlay(`https://dict.youdao.com/dictvoice?audio=${word}&type=${type}`)
-  }
+export const voicePlayer = (word: string, type: string | number, callback: () => void) => {
+  NATIVE.playerPlay(`https://dict.youdao.com/dictvoice?audio=${word}&type=${type}`, callback)
 }
