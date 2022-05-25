@@ -118,6 +118,8 @@ export function activate(context: vscode.ExtensionContext) {
           if (result === -2) {
             order++
             soundPlayer('success')
+            // 可能单词太短，播放发音回调还没执行，就输完切下一个词了，这里在切换下一个词前解发音锁
+            voiceLock = false
             setupWord()
           } else if (result >= 0) {
             hasWrong = true
