@@ -50,7 +50,9 @@ export function activate(context: vscode.ExtensionContext) {
         phonetic = ''
         break
     }
-
+    
+    // API 字典会出现括号，但部分 vscode 插件会拦截括号的输入
+    wordList[order].name = wordList[order].name.replace('(', '').replace(')', '')
     wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
