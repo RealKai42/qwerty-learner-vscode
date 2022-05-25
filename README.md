@@ -110,7 +110,17 @@ Win: `ctrl + shift + p`
   "type": "boolean",
   "default": false,
   "description": "是否开启罚抄模式"
-}
+},
+"qwerty-learner.voiceType": {
+  "type": "string",
+  "enum": [
+    "us",
+    "uk",
+    "close"
+  ],
+  "default": "us",
+  "description": "是否开启发音"
+},
 ```
 
 ## 📕 词库列表
@@ -120,9 +130,47 @@ Win: `ctrl + shift + p`
 - GMAT
 - GRE
 - IELTS
+- 考研
+- 专四
+- 专八
+- 高考 3500 词
 - SAT
 - TOEFL
-- 考研英语
-- 专业四级英语
-- 专业八级英语
-- Coder Dict 程序员常用词
+- 商务英语
+- BEC
+- Coder Dict
+- JS: Array
+- JS: Date
+- JS: Global
+- JS: Map & Set
+- JS: Math
+- JS: Number
+- JS: Object
+- JS: Promise
+- JS: String
+- Python: Built-in
+- Python: array
+- Python: date
+- Python: file
+- Python: class
+- Python: set
+- Python: math
+- Python: string
+- Python: system
+- Java: ArrayList
+- Java: Character
+- Java: Hashmap
+- Java: LinkedList
+- Java: String
+- Java: StringBuffer
+- Linux
+- C#: List API
+- 新概念英语-1
+- 新概念英语-2
+- 新概念英语-3
+- 新概念英语-4
+- SAT en-en
+- Essential Words
+- Essential Words
+- suffix word
+- word roots1

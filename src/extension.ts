@@ -3,6 +3,7 @@ import cet4 from './assets/CET4_T.json'
 import { range } from 'lodash'
 import { compareWord, getConfig, dicts, DictPickItem, getDictFile } from './utils'
 import { soundPlayer } from './sound'
+import { voicePlayer, getVoiceType } from './voice'
 
 export function activate(context: vscode.ExtensionContext) {
   const globalState = context.globalState
@@ -15,7 +16,9 @@ export function activate(context: vscode.ExtensionContext) {
     chapter = globalState.get('chapter', 0),
     order = prevOrder,
     dict = cet4,
-    dictKey = 'cet4'
+    dictKey = 'cet4',
+    voiceType = getVoiceType(),
+    voiceLock = false
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
   let totalChapters = Math.ceil(dict.length / chapterLength)
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
@@ -47,11 +50,19 @@ export function activate(context: vscode.ExtensionContext) {
         phonetic = ''
         break
     }
-
+    
+    // API 字典会出现括号，但部分 vscode 插件会拦截括号的输入
+    wordList[order].name = wordList[order].name.replace('(', '').replace(')', '')
     wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${chapterLength}  ${wordList[order].name}`
     inputBar.text = ''
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
     transBar.text += wordList[order].trans.join('; ')
+    if (voiceType && !voiceLock) {
+      voiceLock = true
+      voicePlayer(wordList[order].name, voiceType, () => {
+        voiceLock = false
+      });
+    }
     updateGlobalState()
   }
 
@@ -109,6 +120,8 @@ export function activate(context: vscode.ExtensionContext) {
           if (result === -2) {
             order++
             soundPlayer('success')
+            // 可能单词太短，播放发音回调还没执行，就输完切下一个词了，这里在切换下一个词前解发音锁
+            voiceLock = false
             setupWord()
           } else if (result >= 0) {
             hasWrong = true
