@@ -1,5 +1,4 @@
 import { getConfig } from './utils'
-import { platform } from 'os'
 interface NativeModule {
   playerPlay(voiceUrl: string, callback: () => void): void
 }
@@ -7,11 +6,24 @@ interface NativeModule {
 let NATIVE: any = null
 
 try {
-  NATIVE = require(`node-loader!./rodio/mac.node`) as NativeModule
+  NATIVE = require(`node-loader!./rodio/mac-arm.node`) as NativeModule
 } catch (error) {
-  try {
+  NATIVE = null
+}
+
+if(!(NATIVE && NATIVE.playerPlay)){
+  try{
     NATIVE = require(`node-loader!./rodio/win32.node`) as NativeModule
-  } catch(error) {}
+  }catch(error){
+    NATIVE = null
+  }
+}
+if(!(NATIVE && NATIVE.playerPlay)){
+  try{
+    NATIVE = require(`node-loader!./rodio/mac-intel.node`) as NativeModule
+  }catch(error){
+    NATIVE = null
+  }
 }
 
 if(!(NATIVE && NATIVE.playerPlay)){
