@@ -4,17 +4,20 @@ interface NativeModule {
   playerPlay(voiceUrl: string, callback: () => void): void
 }
 
-let PLATFORM = 'mac'
-switch (platform()) {
-  case 'win32':
-    PLATFORM = 'win32'
-    break
-  default:
-    PLATFORM = 'mac'
-    break
+let NATIVE: any = null
+
+try {
+  NATIVE = require(`node-loader!./rodio/mac.node`) as NativeModule
+} catch (error) {
+  try {
+    NATIVE = require(`node-loader!./rodio/win32.node`) as NativeModule
+  } catch(error) {}
 }
 
-const NATIVE = require(`node-loader!./rodio/${PLATFORM}.node`) as NativeModule
+if(!(NATIVE && NATIVE.playerPlay)){
+  NATIVE = null
+}
+
 
 type VoiceType = 'us' | 'uk' | 'close'
 
@@ -39,5 +42,9 @@ export const getVoiceType = () => {
 }
 
 export const voicePlayer = (word: string, type: string | number, callback: () => void) => {
-  NATIVE.playerPlay(`https://dict.youdao.com/dictvoice?audio=${word}&type=${type}`, callback)
+  if (NATIVE) {
+    NATIVE.playerPlay(`https://dict.youdao.com/dictvoice?audio=${word}&type=${type}`, callback)
+  } else {
+    callback()
+  }
 }
