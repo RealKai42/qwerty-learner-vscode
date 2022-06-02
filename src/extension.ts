@@ -18,22 +18,16 @@ export function activate(context: vscode.ExtensionContext) {
     dict = cet4,
     dictKey = 'cet4',
     voiceType = getVoiceType(),
-    voiceLock = false,
-    realChapterLength = 0;
+    voiceLock = false;
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
-  resetRealChapterLength()
   let totalChapters = Math.ceil(dict.length / chapterLength)
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
   changeDict(globalState.get('dictKey', 'cet4'))
 
-  function resetRealChapterLength() {
-    realChapterLength = Math.min(chapterLength, wordList.length)
-  }
-
   function setupWord() {
-    if (order === realChapterLength) {
+    if (order === wordList.length) {
       if (!getConfig('reWrite')) {
         if (chapter === totalChapters - 1) {
           chapter = 0
@@ -43,7 +37,6 @@ export function activate(context: vscode.ExtensionContext) {
       }
       order = 0
       wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
-      resetRealChapterLength()
     }
     let phonetic = ''
     switch (getConfig('phonetic')) {
@@ -60,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // API 字典会出现括号，但部分 vscode 插件会拦截括号的输入
     wordList[order].name = wordList[order].name.replace('(', '').replace(')', '')
-    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${realChapterLength}  ${wordList[order].name}`
+    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${wordList.length}  ${wordList[order].name}`
     inputBar.text = ''
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
     transBar.text += wordList[order].trans.join('; ')
@@ -76,7 +69,6 @@ export function activate(context: vscode.ExtensionContext) {
   function refreshWordList() {
     totalChapters = Math.ceil(dict.length / chapterLength)
     wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
-    resetRealChapterLength()
     setupWord()
   }
 
