@@ -9,6 +9,9 @@ export function activate(context: vscode.ExtensionContext) {
   const globalState = context.globalState
   globalState.setKeysForSync(['chapter', 'order', 'dictKey'])
   let chapterLength = getConfig('chapterLength')
+  let readOnlyMode = getConfig('readOnlyMode')
+  let readOnlyInterval = getConfig('readOnlyInterval')
+  let readOnlyIntervalId : NodeJS.Timeout | null = null 
   let prevOrder = globalState.get('order', 0)
   if (prevOrder > chapterLength) { prevOrder = 0 }
   let isStart = false,
@@ -100,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   vscode.workspace.onDidChangeTextDocument((e) => {
-    if (isStart) {
+    if (isStart && !readOnlyMode) {
       const { uri } = e.document
       // 避免破坏配置文件
       if (uri.scheme.indexOf("vscode") !== -1) { return }
@@ -145,10 +148,22 @@ export function activate(context: vscode.ExtensionContext) {
       inputBar.show()
       transBar.show()
       setupWord()
+      if(readOnlyMode){
+        readOnlyIntervalId = setInterval(() => {
+            order++
+            setupWord()
+        }, readOnlyInterval);
+      }
     } else {
       wordBar.hide()
       inputBar.hide()
       transBar.hide()
+      if(readOnlyMode){
+        if(readOnlyIntervalId !== null ){
+            clearInterval(readOnlyIntervalId)
+            readOnlyIntervalId=null
+        }
+      }
     }
   })
 
