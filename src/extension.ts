@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
   const globalState = context.globalState
   globalState.setKeysForSync(['chapter', 'order', 'dictKey'])
   let chapterLength = getConfig('chapterLength')
-  let readOnlyMode = getConfig('readOnlyMode')
+  let readOnlyMode = globalState.get('readOnlyMode', false)
   let readOnlyInterval = getConfig('readOnlyInterval')
   let readOnlyIntervalId : NodeJS.Timeout | null = null 
   let prevOrder = globalState.get('order', 0)
@@ -141,7 +141,10 @@ export function activate(context: vscode.ExtensionContext) {
     }
   })
 
-  let startCom = vscode.commands.registerCommand('qwerty-learner.Start', () => {
+  let startFunction = () => {
+    // 在第一次启动时，设置 qwerty-learner.readOnlyMode 的正确值
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', readOnlyMode);
+
     isStart = !isStart
     if (isStart) {
       wordBar.show()
@@ -159,13 +162,19 @@ export function activate(context: vscode.ExtensionContext) {
       inputBar.hide()
       transBar.hide()
       if(readOnlyMode){
-        if(readOnlyIntervalId !== null ){
-            clearInterval(readOnlyIntervalId)
-            readOnlyIntervalId=null
-        }
+        removeInterval()
       }
     }
-  })
+  }
+
+  function removeInterval() {
+    if(readOnlyIntervalId !== null ){
+        clearInterval(readOnlyIntervalId)
+        readOnlyIntervalId=null
+    }
+  }
+
+  let startCom = vscode.commands.registerCommand('qwerty-learner.Start', startFunction)
 
   let changeChapterCom = vscode.commands.registerCommand('qwerty-learner.changeChapter', async () => {
     const inputChapter = await vscode.window.showQuickPick(
@@ -192,9 +201,27 @@ export function activate(context: vscode.ExtensionContext) {
     }
   })
 
+  let closeReadOnlyMode = vscode.commands.registerCommand('qwerty-learner.closeReadOnlyMode', () => {
+    readOnlyMode = false
+    globalState.update('readOnlyMode', false)
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', false);
+    removeInterval()
+  })
+
+  let openReadOnlyMode = vscode.commands.registerCommand('qwerty-learner.openReadOnlyMode', () => {
+    readOnlyMode = true
+    globalState.update('readOnlyMode', true)
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', true);
+    isStart = false
+    startFunction()
+    
+  })
+
   context.subscriptions.push(startCom)
   context.subscriptions.push(changeChapterCom)
   context.subscriptions.push(changeDictCom)
+  context.subscriptions.push(closeReadOnlyMode)
+  context.subscriptions.push(openReadOnlyMode)
 }
 
 // this method is called when your extension is deactivated

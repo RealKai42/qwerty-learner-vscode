@@ -64,6 +64,8 @@
 - Change Chapter 可以切换章节
 - Change Dictionary 可以切换字典
 - Start/Pause 可以开关插件，功能等价于一键启动快捷键
+- Open Read Only Mode 开启只读模式
+- Close Read Only Mode 关闭只读模式
 
 命令面板快捷键  
 Mac: `cmd + shift + p`  
@@ -110,6 +112,11 @@ Win: `ctrl + shift + p`
   "type": "boolean",
   "default": false,
   "description": "是否开启罚抄模式"
+},
+"qwerty-learner.readOnlyInterval": {
+  "type": "number",
+  "default": 5000,
+  "description": "只读模式中单词切换间隔时间(ms)"
 },
 "qwerty-learner.voiceType": {
   "type": "string",
