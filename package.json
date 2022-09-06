@@ -46,8 +46,28 @@
       {
         "command": "qwerty-learner.changeDict",
         "title": "Qwerty Learner Change Dictionary"
+      },
+      {
+        "command": "qwerty-learner.closeReadOnlyMode",
+        "title": "Qwerty Learner Close Read Only Mode"
+      },
+      {
+        "command": "qwerty-learner.openReadOnlyMode",
+        "title": "Qwerty Learner Open Read Only Mode"
       }
     ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "qwerty-learner.closeReadOnlyMode",
+          "when": "qwerty-learner.readOnlyMode"
+        },
+        {
+          "command": "qwerty-learner.openReadOnlyMode",
+          "when": "!qwerty-learner.readOnlyMode"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "qwerty-learner.Start",
@@ -95,6 +115,11 @@
           "type": "boolean",
           "default": false,
           "description": "是否开启罚抄模式"
+        },
+        "qwerty-learner.readOnlyInterval": {
+          "type": "number",
+          "default": 5000,
+          "description": "只读模式中单词切换间隔时间(ms)"
         },
         "qwerty-learner.voiceType": {
           "type": "string",
