@@ -37,9 +37,13 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
           chapter += 1
         }
+        wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
+      }
+      // 在罚抄模式下所有的错词都没有了 重新拼写当前章节
+      else if (wordList.length === 0) {
+        wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
       }
       order = 0
-      wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
     }
     let phonetic = ''
     switch (getConfig('phonetic')) {
@@ -121,7 +125,13 @@ export function activate(context: vscode.ExtensionContext) {
           inputBar.text += text
           const result = compareWord(wordList[order].name, inputBar.text)
           if (result === -2) {
-            order++
+            // 在拼写正确的时候 开启罚抄模式 将正确的移除 剩下的就是拼写错误的 
+            if (getConfig('reWrite')) {
+              wordList.slice(order, 1)
+            }
+            else {
+              order++
+            }
             soundPlayer('success')
             // 可能单词太短，播放发音回调还没执行，就输完切下一个词了，这里在切换下一个词前解发音锁
             voiceLock = false
