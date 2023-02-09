@@ -141,11 +141,10 @@ export function activate(context: vscode.ExtensionContext) {
             if (getConfig('reWrite')) {
               var lastWord = wordList[wordList.length - 1]
               var curWord = wordList[order]
-              if  (lastWord.name !== curWord.name)
+              if (lastWord.name !== curWord.name || wordList.length === 1)
               {
                 wordList.push(curWord)
               }
-              wordList.splice(order, 1)
             }
 
             hasWrong = true
