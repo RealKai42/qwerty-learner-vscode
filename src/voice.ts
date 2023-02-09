@@ -11,25 +11,24 @@ try {
   NATIVE = null
 }
 
-if(!(NATIVE && NATIVE.playerPlay)){
-  try{
+if (!(NATIVE && NATIVE.playerPlay)) {
+  try {
     NATIVE = require(`node-loader!./rodio/win32.node`) as NativeModule
-  }catch(error){
+  } catch (error) {
     NATIVE = null
   }
 }
-if(!(NATIVE && NATIVE.playerPlay)){
-  try{
+if (!(NATIVE && NATIVE.playerPlay)) {
+  try {
     NATIVE = require(`node-loader!./rodio/mac-intel.node`) as NativeModule
-  }catch(error){
+  } catch (error) {
     NATIVE = null
   }
 }
 
-if(!(NATIVE && NATIVE.playerPlay)){
+if (!(NATIVE && NATIVE.playerPlay)) {
   NATIVE = null
 }
-
 
 type VoiceType = 'us' | 'uk' | 'close'
 

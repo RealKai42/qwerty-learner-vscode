@@ -11,9 +11,11 @@ export function activate(context: vscode.ExtensionContext) {
   let chapterLength = getConfig('chapterLength')
   let readOnlyMode = globalState.get('readOnlyMode', false)
   let readOnlyInterval = getConfig('readOnlyInterval')
-  let readOnlyIntervalId : NodeJS.Timeout | null = null 
+  let readOnlyIntervalId: NodeJS.Timeout | null = null
   let prevOrder = globalState.get('order', 0)
-  if (prevOrder > chapterLength) { prevOrder = 0 }
+  if (prevOrder > chapterLength) {
+    prevOrder = 0
+  }
   let isStart = false,
     hasWrong = false,
     chapter = globalState.get('chapter', 0),
@@ -21,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     dict = cet4,
     dictKey = 'cet4',
     voiceType = getVoiceType(),
-    voiceLock = false;
+    voiceLock = false
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
   let totalChapters = Math.ceil(dict.length / chapterLength)
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
@@ -64,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
       voiceLock = true
       voicePlayer(wordList[order].name, voiceType, () => {
         voiceLock = false
-      });
+      })
     }
     updateGlobalState()
   }
@@ -91,22 +93,24 @@ export function activate(context: vscode.ExtensionContext) {
     globalState.update('dictKey', dictKey)
   }
 
-  vscode.workspace.onDidChangeConfiguration(function(event) {
-    const configList = ['qwerty-learner.chapterLength'];
-    const affected = configList.some(item => event.affectsConfiguration(item));
+  vscode.workspace.onDidChangeConfiguration(function (event) {
+    const configList = ['qwerty-learner.chapterLength']
+    const affected = configList.some((item) => event.affectsConfiguration(item))
     if (affected) {
       chapter = 0
       order = 0
       chapterLength = getConfig('chapterLength')
       refreshWordList()
     }
-  });
+  })
 
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (isStart && !readOnlyMode) {
       const { uri } = e.document
       // 避免破坏配置文件
-      if (uri.scheme.indexOf("vscode") !== -1) { return }
+      if (uri.scheme.indexOf('vscode') !== -1) {
+        return
+      }
 
       const { range, text, rangeLength } = e.contentChanges[0]
 
@@ -143,7 +147,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let startFunction = () => {
     // 在第一次启动时，设置 qwerty-learner.readOnlyMode 的正确值
-    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', readOnlyMode);
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', readOnlyMode)
 
     isStart = !isStart
     if (isStart) {
@@ -151,26 +155,26 @@ export function activate(context: vscode.ExtensionContext) {
       inputBar.show()
       transBar.show()
       setupWord()
-      if(readOnlyMode){
+      if (readOnlyMode) {
         readOnlyIntervalId = setInterval(() => {
-            order++
-            setupWord()
-        }, readOnlyInterval);
+          order++
+          setupWord()
+        }, readOnlyInterval)
       }
     } else {
       wordBar.hide()
       inputBar.hide()
       transBar.hide()
-      if(readOnlyMode){
+      if (readOnlyMode) {
         removeInterval()
       }
     }
   }
 
   function removeInterval() {
-    if(readOnlyIntervalId !== null ){
-        clearInterval(readOnlyIntervalId)
-        readOnlyIntervalId=null
+    if (readOnlyIntervalId !== null) {
+      clearInterval(readOnlyIntervalId)
+      readOnlyIntervalId = null
     }
   }
 
@@ -204,17 +208,16 @@ export function activate(context: vscode.ExtensionContext) {
   let closeReadOnlyMode = vscode.commands.registerCommand('qwerty-learner.closeReadOnlyMode', () => {
     readOnlyMode = false
     globalState.update('readOnlyMode', false)
-    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', false);
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', false)
     removeInterval()
   })
 
   let openReadOnlyMode = vscode.commands.registerCommand('qwerty-learner.openReadOnlyMode', () => {
     readOnlyMode = true
     globalState.update('readOnlyMode', true)
-    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', true);
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', true)
     isStart = false
     startFunction()
-    
   })
 
   context.subscriptions.push(startCom)
