@@ -137,6 +137,17 @@ export function activate(context: vscode.ExtensionContext) {
             voiceLock = false
             setupWord()
           } else if (result >= 0) {
+            // 开启罚抄模式 将拼写错误的单词添加到末尾
+            if (getConfig('reWrite')) {
+              var lastWord = wordList[wordList.length - 1]
+              var curWord = wordList[order]
+              if  (lastWord.name !== curWord.name)
+              {
+                wordList.push(curWord)
+              }
+              wordList.splice(order, 1)
+            }
+
             hasWrong = true
             inputBar.color = getConfig('highlightWrongColor')
             soundPlayer('wrong')
