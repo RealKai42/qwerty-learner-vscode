@@ -127,7 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (result === -2) {
             // 在拼写正确的时候 开启罚抄模式 将正确的移除 剩下的就是拼写错误的 
             if (getConfig('reWrite')) {
-              wordList.slice(order, 1)
+              wordList.splice(order, 1)
             }
             else {
               order++
