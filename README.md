@@ -111,7 +111,7 @@ Win: `ctrl + shift + p`
 "qwerty-learner.reWrite": {
   "type": "boolean",
   "default": false,
-  "description": "是否开启罚抄模式"
+  "description": "是否开启循环模式（循环单一章节）"
 },
 "qwerty-learner.readOnlyInterval": {
   "type": "number",
