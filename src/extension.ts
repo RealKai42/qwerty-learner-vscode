@@ -12,6 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
   let readOnlyMode = globalState.get('readOnlyMode', false)
   let readOnlyInterval = getConfig('readOnlyInterval')
   let readOnlyIntervalId: NodeJS.Timeout | null = null
+  let placeholder = getConfig('placeholder') // 用于控制word不可见时，inputBar中是否出现占位符及样式
+  let wordVisibility = globalState.get('wordVisibility', true)
   let prevOrder = globalState.get('order', 0)
   if (prevOrder > chapterLength) {
     prevOrder = 0
@@ -26,6 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
     voiceLock = false
   let wordList = dict.slice(chapter * chapterLength, (chapter + 1) * chapterLength)
   let totalChapters = Math.ceil(dict.length / chapterLength)
+  let inputBarIndex = 0 // 当前inputBar将要输入到的下标
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
@@ -58,8 +61,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     // API 字典会出现括号，但部分 vscode 插件会拦截括号的输入
     wordList[order].name = wordList[order].name.replace('(', '').replace(')', '')
-    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${wordList.length}  ${wordList[order].name}`
-    inputBar.text = ''
+    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${wordList.length}  ${wordVisibility ? wordList[order].name : ""}`
+    if (wordVisibility || placeholder === '') {
+        inputBar.text = ''
+    } else {
+        // 拼接占位符
+        inputBar.text = placeholder.repeat(wordList[order].name.length)
+    }
+    inputBarIndex = 0
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
     transBar.text += wordList[order].trans.join('; ')
     if (voiceType && !voiceLock) {
@@ -102,6 +111,12 @@ export function activate(context: vscode.ExtensionContext) {
       chapterLength = getConfig('chapterLength')
       refreshWordList()
     }
+
+    // 修改了placeholder只需要更新placeholder
+    if (event.affectsConfiguration("qwerty-learner.placeholder")) {
+      placeholder = getConfig('placeholder')
+      setupWord()
+    }
   })
 
   vscode.workspace.onDidChangeTextDocument((e) => {
@@ -122,8 +137,18 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.workspace.applyEdit(editAction)
         if (!hasWrong) {
           soundPlayer('click')
-          inputBar.text += text
-          const result = compareWord(wordList[order].name, inputBar.text)
+          let curInput = ''
+          if (wordVisibility || placeholder === '') {
+            // 没有使用placeholder，不需要特殊处理
+            inputBar.text += text
+            curInput = inputBar.text
+          } else {
+            // 拼接占位符 && 获取当前已经键入的值进行比较
+            inputBar.text = inputBar.text.substring(0, inputBarIndex) + text + inputBar.text.substring(inputBarIndex + 1)
+            inputBarIndex += 1
+            curInput = inputBar.text.substring(0, inputBarIndex)
+          }
+          const result = compareWord(wordList[order].name, curInput)
           if (result === -2) {
             order++
             soundPlayer('success')
@@ -148,6 +173,7 @@ export function activate(context: vscode.ExtensionContext) {
   let startFunction = () => {
     // 在第一次启动时，设置 qwerty-learner.readOnlyMode 的正确值
     vscode.commands.executeCommand('setContext', 'qwerty-learner.readOnlyMode', readOnlyMode)
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.wordVisibility', wordVisibility)
 
     isStart = !isStart
     if (isStart) {
@@ -220,11 +246,19 @@ export function activate(context: vscode.ExtensionContext) {
     startFunction()
   })
 
+  let toggleWordVisibility = vscode.commands.registerCommand('qwerty-learner.toggleWordVisibility', () => {
+    wordVisibility = !wordVisibility
+    globalState.update('wordVisibility', wordVisibility)
+    vscode.commands.executeCommand('setContext', 'qwerty-learner.toggleWordVisibility', wordVisibility)
+    setupWord()
+  })
+
   context.subscriptions.push(startCom)
   context.subscriptions.push(changeChapterCom)
   context.subscriptions.push(changeDictCom)
   context.subscriptions.push(closeReadOnlyMode)
   context.subscriptions.push(openReadOnlyMode)
+  context.subscriptions.push(toggleWordVisibility)
 }
 
 // this method is called when your extension is deactivated
