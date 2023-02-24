@@ -61,12 +61,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     // API 字典会出现括号，但部分 vscode 插件会拦截括号的输入
     wordList[order].name = wordList[order].name.replace('(', '').replace(')', '')
-    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${wordList.length}  ${wordVisibility ? wordList[order].name : ""}`
+    wordBar.text = `${dicts[dictKey].name} chp.${chapter + 1}  ${order + 1}/${wordList.length}  ${
+      wordVisibility ? wordList[order].name : ''
+    }`
     if (wordVisibility || placeholder === '') {
-        inputBar.text = ''
+      inputBar.text = ''
     } else {
-        // 拼接占位符
-        inputBar.text = placeholder.repeat(wordList[order].name.length)
+      // 拼接占位符
+      inputBar.text = placeholder.repeat(wordList[order].name.length)
     }
     inputBarIndex = 0
     transBar.text = phonetic ? `/${phonetic}/  ` : ''
@@ -113,7 +115,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // 修改了placeholder只需要更新placeholder
-    if (event.affectsConfiguration("qwerty-learner.placeholder")) {
+    if (event.affectsConfiguration('qwerty-learner.placeholder')) {
       placeholder = getConfig('placeholder')
       setupWord()
     }

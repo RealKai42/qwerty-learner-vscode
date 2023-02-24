@@ -137,7 +137,7 @@ Win: `ctrl + shift + p`
     "-",
     ""
   ],
-  "default": "",
+  "default": "-",
   "description": "未输入时的占位符，空表示无占位符（仅当wordVisibility === true时生效）"
 }
 ```
