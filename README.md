@@ -66,6 +66,7 @@
 - Start/Pause 可以开关插件，功能等价于一键启动快捷键
 - Open Read Only Mode 开启只读模式
 - Close Read Only Mode 关闭只读模式
+- Toggle Word Visibility 切换是否展示单词（默写模式）
 
 命令面板快捷键  
 Mac: `cmd + shift + p`  
@@ -128,6 +129,17 @@ Win: `ctrl + shift + p`
   "default": "us",
   "description": "是否开启发音"
 },
+"qwerty-learner.placeholder": {
+  "type": "string",
+  "enum": [
+    "_",
+    "*",
+    "-",
+    ""
+  ],
+  "default": "-",
+  "description": "未输入时的占位符，空表示无占位符（仅当wordVisibility === true时生效）"
+}
 ```
 
 ## 📕 词库列表
