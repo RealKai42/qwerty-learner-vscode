@@ -108,15 +108,6 @@ const dictInfos: Dictionary[] = [
     language: 'en',
   },
   {
-    id: 'SHjuniormiddleOxford',
-    name: '上海初中牛津词汇',
-    description: '上海初中牛津词汇',
-    category: '英语学习',
-    url: 'OxfordVocabulary_juniorMiddleSH.json',
-    length: 1270,
-    language: 'en',
-  },
-  {
     id: 'sat',
     name: 'SAT',
     description: '美国 SAT 考试词库',
