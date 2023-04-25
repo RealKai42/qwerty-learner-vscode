@@ -153,6 +153,15 @@ const dictInfos: Dictionary[] = [
     language: 'en',
   },
   {
+    id: 'pets3-2023',
+    name: 'PETS-2023',
+    description: '全国英语等级考试常考词汇',
+    category: '中国考试',
+    url: 'PETS3-2023.json',
+    length: 4449,
+    language: 'en',
+  },
+  {
     id: 'german2en',
     name: '德语 英译',
     description: '德语词汇, 英语翻译',
