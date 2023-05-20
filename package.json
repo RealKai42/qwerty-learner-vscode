@@ -2,7 +2,7 @@
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
@@ -27,16 +27,21 @@
     "url": "https://github.com/Kaiyiwing/qwerty-learner-vscode/"
   },
   "homepage": "https://github.com/Kaiyiwing/qwerty-learner-vscode",
-  "activationEvents": [
-    "onCommand:qwerty-learner.Start",
-    "onCommand:qwerty-learner.changeChapter",
-    "onCommand:qwerty-learner.changeDict"
-  ],
-  "main": "./dist/extension",
+  "scripts": {
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "vscode:prepublish": "webpack --mode production",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "test-compile": "tsc -p ./",
+    "vsce:publish": "vsce package"
+  },
+  "main": "./dist/index",
   "contributes": {
     "commands": [
       {
-        "command": "qwerty-learner.Start",
+        "command": "qwerty-learner.start",
         "title": "Qwerty Learner Start/Pause"
       },
       {
@@ -48,33 +53,17 @@
         "title": "Qwerty Learner Change Dictionary"
       },
       {
-        "command": "qwerty-learner.closeReadOnlyMode",
-        "title": "Qwerty Learner Close Read Only Mode"
-      },
-      {
-        "command": "qwerty-learner.openReadOnlyMode",
-        "title": "Qwerty Learner Open Read Only Mode"
-      },
-      {
         "command": "qwerty-learner.toggleWordVisibility",
         "title": "Qwerty Learner Toggle Word Visibility"
+      },
+      {
+        "command": "qwerty-learner.toggleReadOnlyMode",
+        "title": "Qwerty Learner Toggle Read Only Mode"
       }
     ],
-    "menus": {
-      "commandPalette": [
-        {
-          "command": "qwerty-learner.closeReadOnlyMode",
-          "when": "qwerty-learner.readOnlyMode"
-        },
-        {
-          "command": "qwerty-learner.openReadOnlyMode",
-          "when": "!qwerty-learner.readOnlyMode"
-        }
-      ]
-    },
     "keybindings": [
       {
-        "command": "qwerty-learner.Start",
+        "command": "qwerty-learner.start",
         "key": "shift+alt+q",
         "mac": "ctrl+shift+q",
         "when": "editorTextFocus"
@@ -83,16 +72,6 @@
     "configuration": {
       "title": "Qwerty Learner",
       "properties": {
-        "qwerty-learner.highlightWrongColor": {
-          "type": "string",
-          "default": "#EE3D11",
-          "description": "输入错误时单词的颜色"
-        },
-        "qwerty-learner.highlightWrongDelay": {
-          "type": "number",
-          "default": 400,
-          "description": "输入错误时清空输入的延迟时间"
-        },
         "qwerty-learner.keySound": {
           "type": "boolean",
           "default": true,
@@ -115,10 +94,22 @@
           "maximum": 100,
           "description": "每个章节包含的单词数量"
         },
-        "qwerty-learner.reWrite": {
-          "type": "boolean",
-          "default": false,
-          "description": "是否开启循环模式（循环单一章节）"
+        "qwerty-learner.wordExerciseTime": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "每个单词的练习次数"
+        },
+        "qwerty-learner.highlightWrongColor": {
+          "type": "string",
+          "default": "#EE3D11",
+          "description": "输入错误时单词的颜色"
+        },
+        "qwerty-learner.highlightWrongDelay": {
+          "type": "number",
+          "default": 400,
+          "description": "输入错误时清空输入的延迟时间"
         },
         "qwerty-learner.readOnlyInterval": {
           "type": "number",
@@ -148,16 +139,6 @@
         }
       }
     }
-  },
-  "scripts": {
-    "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
-    "vscode:prepublish": "webpack --mode production",
-    "compile": "webpack --mode development",
-    "watch": "webpack --mode development --watch",
-    "test-compile": "tsc -p ./",
-    "vsce:publish": "vsce package"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",

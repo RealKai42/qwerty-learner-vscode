@@ -1,22 +1,7 @@
-import * as vscode from 'vscode'
-import path from 'path'
-import fs from 'fs'
-export type Dictionary = {
-  id: string
-  name: string
-  description: string
-  category: string
-  url: string
-  length: number
-  language: 'en' | 'romaji' | 'zh' | 'ja' | 'code' | 'de'
-}
-
-export type Dicts = {
-  [key: string]: Dictionary
-}
+import { Dictionary } from '@/typings'
 
 // 使用与网页版 qwerty 一样的格式，方便共享数据
-const dictInfos: Dictionary[] = [
+export const dictionaries: Dictionary[] = [
   {
     id: 'cet4',
     name: 'CET-4',
@@ -667,35 +652,7 @@ const dictInfos: Dictionary[] = [
   },
 ]
 
-export const dicts: Dicts = {}
-dictInfos.forEach((i) => (dicts[i.id] = i))
-
-export function compareWord(word: string, input: string) {
-  // 错误返回错误索引，正确返回-2，未完成输入且无错误返回-1
-  for (let i = 0; i < word.length; i++) {
-    if (typeof input[i] !== 'undefined') {
-      if (word[i] !== input[i]) {
-        return i
-      }
-    } else {
-      return -1
-    }
-  }
-  return -2
-}
-
-export function getConfig(key: string) {
-  return vscode.workspace.getConfiguration('qwerty-learner')[key]
-}
-
-export function getDictFile(dictPath: string) {
-  const filePath = path.join(__dirname, '..', 'assets/dicts', dictPath)
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'))
-}
-
-export interface DictPickItem {
-  label: string
-  path: string
-  key: string
-  detail: string
-}
+/**
+ * An object-map from dictionary IDs to dictionary themselves.
+ */
+export const idDictionaryMap: Record<string, Dictionary> = Object.fromEntries(dictionaries.map((dict) => [dict.id, dict]))
