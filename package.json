@@ -6,7 +6,7 @@
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
-    "vscode": "^1.53.0"
+    "vscode": "^1.75.0"
   },
   "license": "MIT",
   "keywords": [
@@ -38,6 +38,11 @@
     "vsce:publish": "vsce package"
   },
   "main": "./dist/index",
+  "activationEvents": [
+    "onCommand:qwerty-learner.start",
+    "onCommand:qwerty-learner.changeChapter",
+    "onCommand:qwerty-learner.changeDict"
+  ],
   "contributes": {
     "commands": [
       {
