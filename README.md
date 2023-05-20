@@ -33,8 +33,6 @@
 
 本项目为 [Qwerty Learner](https://github.com/Kaiyiwing/qwerty-learner) 的 VSCode 插件版本，访问原始项目获得更好的体验。
 
-（注：依赖 VSCode 最低版本为 1.53.0，如提示 `it is not compatible with the current version of VS Code` 请升级 VSCode 版本）
-
 ## ✨ 实现原理
 
 因为 VSC 没有提供对 Keypress 的回调，所以实现上使用了较为取巧的方式，监听用户当前输入文档的改变，然后删除用户输入。 用户可以在任意代码、文档页面开启软件进行英语打字练习，插件会自动删除用户输入的文字，不会对文档内容造成影响。
