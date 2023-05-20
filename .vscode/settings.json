@@ -14,5 +14,5 @@
   },
   "css.lint.unknownAtRules": "ignore",
   "css.validate": false,
-  "cSpell.words": ["usphone", "ukphone"]
+  "cSpell.words": ["rodio", "romaji", "ukphone", "usphone"]
 }
