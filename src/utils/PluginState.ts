@@ -64,6 +64,7 @@ export default class PluginState {
   set chapter(value: number) {
     this._chapter = value
     this.order = 0
+    this.currentExerciseCount = 0
     this._globalState.update('chapter', this._chapter)
     this._globalState.update('order', this.order)
   }
@@ -81,6 +82,7 @@ export default class PluginState {
   }
   set dictKey(value: string) {
     this.order = 0
+    this.currentExerciseCount = 0
     this.chapter = 0
     this._dictKey = value
     this.dict = idDictionaryMap[this._dictKey]
@@ -159,7 +161,6 @@ export default class PluginState {
     this.curInput = ''
     this.currentExerciseCount += 1
     if (this.currentExerciseCount >= this.wordExerciseTime) {
-      this.currentExerciseCount = 0
       this.nextWord()
     }
     this.voiceLock = false
@@ -178,6 +179,7 @@ export default class PluginState {
     } else {
       this.order += 1
     }
+    this.currentExerciseCount = 0
   }
 
   getInitialWordBarContent() {
