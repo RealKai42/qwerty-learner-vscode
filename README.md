@@ -138,6 +138,11 @@ Win: `ctrl + shift + p`
   ],
   "default": "-",
   "description": "未输入时的占位符，空表示无占位符（仅当wordVisibility === true时生效）"
+},
+"qwerty-learner.random": {
+  "type": "boolean",
+  "default": false,
+  "description": "是否章节内单词顺序随机"
 }
 ```
 

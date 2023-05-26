@@ -29,6 +29,12 @@ export default class PluginState {
 
   public voiceLock: boolean
 
+  private _wordList: {
+    wordList: Word[]
+    chapter: number
+    dictKey: string
+  }
+
   constructor(context: vscode.ExtensionContext) {
     const globalState = context.globalState
     this._globalState = globalState
@@ -56,6 +62,12 @@ export default class PluginState {
     this._wordVisibility = globalState.get('wordVisibility', true)
 
     this.voiceLock = false
+
+    this._wordList = {
+      wordList: [],
+      chapter: 0,
+      dictKey: this._dictKey,
+    }
   }
 
   get chapter(): number {
@@ -94,13 +106,28 @@ export default class PluginState {
     return getConfig('wordExerciseTime')
   }
   get wordList(): Word[] {
-    const wordList = this.dictWords.slice(this.chapter * this.chapterLength, (this.chapter + 1) * this.chapterLength)
-    wordList.forEach((word) => {
-      // API 字典会出现括号，但部分 vscode 插件会拦截括号的输入
-      word.name = word.name.replace('(', '').replace(')', '')
-    })
+    if (this._wordList.wordList.length > 0 && this._wordList.dictKey === this.dictKey && this._wordList.chapter === this.chapter) {
+      return this._wordList.wordList
+    } else {
+      let wordList = this.dictWords.slice(this.chapter * this.chapterLength, (this.chapter + 1) * this.chapterLength)
+      wordList.forEach((word) => {
+        // API 字典会出现括号，但部分 vscode 插件会拦截括号的输入
+        word.name = word.name.replace('(', '').replace(')', '')
+      })
 
-    return wordList
+      const isRandom = getConfig('random')
+      if (isRandom) {
+        wordList = wordList.sort(() => Math.random() - 0.5)
+      }
+
+      this._wordList = {
+        wordList,
+        chapter: this.chapter,
+        dictKey: this.dictKey,
+      }
+
+      return wordList
+    }
   }
 
   get wordVisibility(): boolean {

@@ -2,7 +2,7 @@
   "name": "qwerty-learner",
   "displayName": "Qwerty Learner",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "publisher": "kaiyi",
   "icon": "docs/logo.png",
   "engines": {
@@ -141,6 +141,11 @@
           ],
           "default": "-",
           "description": "未输入时的占位符，空表示无占位符（仅当wordVisibility === true时生效）"
+        },
+        "qwerty-learner.random": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否章节内单词顺序随机"
         }
       }
     }
