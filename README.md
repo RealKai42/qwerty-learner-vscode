@@ -16,13 +16,13 @@
 </p>
 
 <div align=center>
-<img  src="https://imgur.com/YozF2Tw.png"/>
+<img  src="docs/Screenshot.png"/>
 </div>
 
 ## 💡 演示
 
 <div align=center>
-<img  src="https://imgur.com/CBxwOnz.png"/>
+<img  src="docs/typing.gif"/>
 </div>
 
 ## 📸 安装
@@ -56,7 +56,7 @@
 打开 VSCode 命令面板，通过 “Qwerty” 前缀过滤，即可发现插件内置的命令。
 
 <div align=center>
-<img  src="https://imgur.com/9O4hb6S.png"/>
+<img  src="docs/command.png"/>
 </div>
 
 - Change Chapter 可以切换章节
