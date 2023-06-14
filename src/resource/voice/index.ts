@@ -26,7 +26,13 @@ if (!(NATIVE && NATIVE.playerPlay)) {
     NATIVE = null
   }
 }
-
+if (!(NATIVE && NATIVE.playerPlay)) {
+  try {
+    NATIVE = require(`node-loader!./rodio/linux-x64.node`) as NativeModule
+  } catch (error) {
+    NATIVE = null
+  }
+}
 if (!(NATIVE && NATIVE.playerPlay)) {
   NATIVE = null
 }
