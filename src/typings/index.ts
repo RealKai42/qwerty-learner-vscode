@@ -12,7 +12,7 @@ export type Word = {
   ukphone?: string
 }
 
-export type VoiceType = 'us' | 'uk' | 'close'
+export type VoiceType = 'us' | 'uk' | 'ja' | 'zh'| 'romaji' | 'de' |'close'
 
 export type Dictionary = {
   id: string

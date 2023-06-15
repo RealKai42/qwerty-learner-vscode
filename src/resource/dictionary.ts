@@ -615,12 +615,21 @@ export const dictionaries: Dictionary[] = [
     language: 'romaji',
   },
   {
+    id: 'japanese007',
+    name: 'N2W',
+    description: '日语N2W',
+    category: '日语学习',
+    url: 'JapVocabList.N2W.json',
+    length: 1836,
+    language: 'romaji',
+  },
+  {
     id: 'japanese005',
     name: 'N2',
     description: '日语N2',
     category: '日语学习',
     url: 'JapVocabList.N2.json',
-    length: 1836,
+    length: 83,
     language: 'romaji',
   },
   {

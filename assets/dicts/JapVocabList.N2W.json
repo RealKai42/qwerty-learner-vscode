@@ -1,0 +1,336 @@
+[
+  {
+    "name": "zuutto",
+    "trans": ["--一直"]
+  },
+  {
+    "name": "yogosu",
+    "trans": ["(1) 玷污，羞辱，(2) 污染，弄脏，玷污，弄脏，染色--汚す"]
+  },
+  {
+    "name": "sukkiri",
+    "trans": ["匀称，清晰，整洁--すっきり"]
+  },
+  {
+    "name": "uketamawaru",
+    "trans": ["(谦虚)听到，被告知，知道--承る"]
+  },
+  {
+    "name": "fuku",
+    "trans": ["擦拭，擦干--拭く"]
+  },
+  {
+    "name": "yakedo",
+    "trans": ["烧伤--火傷"]
+  },
+  {
+    "name": "suri",
+    "trans": ["扒手--掏摸"]
+  },
+  {
+    "name": "sumu",
+    "trans": ["变清，变透明--澄む"]
+  },
+  {
+    "name": "kossori",
+    "trans": ["悄悄地，秘密地--こっそり"]
+  },
+  {
+    "name": "harigane",
+    "trans": ["金属丝，电线--針金"]
+  },
+  {
+    "name": "sonaeru",
+    "trans": ["装备有，配备--具える"]
+  },
+  {
+    "name": "hiji",
+    "trans": ["肘部--肘"]
+  },
+  {
+    "name": "yuderu",
+    "trans": ["煮沸，煮熟--ゆでる"]
+  },
+  {
+    "name": "taku",
+    "trans": ["燃烧，点燃火--焚く"]
+  },
+  {
+    "name": "mezamashi",
+    "trans": ["（缩略词）闹钟--目覚し"]
+  },
+  {
+    "name": "sawayaka",
+    "trans": ["清新，爽快，令人振奋--さわやか"]
+  },
+  {
+    "name": "harikiru",
+    "trans": ["精神抖擞，充满活力--張り切る"]
+  },
+  {
+    "name": "koraeru",
+    "trans": ["忍受，忍耐，承受--こらえる"]
+  },
+  {
+    "name": "samatageru",
+    "trans": ["妨碍，阻止，阻挠--妨げる"]
+  },
+  {
+    "name": "kuwaeru",
+    "trans": ["--含在嘴里"]
+  },
+
+  {
+    "name": "ukabu",
+    "trans": ["浮现，浮动，浮出水面--浮ぶ"]
+  },
+  {
+    "name": "maku",
+    "trans": ["撒，散布，播种--撒く"]
+  },
+  {
+    "name": "muku",
+    "trans": ["剥皮，削皮，去壳--剥く"]
+  },
+  {
+    "name": "todomaru",
+    "trans": ["固定，停留，逗留--留まる"]
+  },
+  {
+    "name": "nokogiri",
+    "trans": ["锯子--のこぎり"]
+  },
+  {
+    "name": "fukumeru",
+    "trans": ["包含，包括，传授，使理解--含める"]
+  },
+  {
+    "name": "ahira",
+    "trans": ["--あひら"]
+  },
+  {
+    "name": "maku",
+    "trans": ["缠绕，卷起--巻く"]
+  },
+  {
+    "name": "bane",
+    "trans": ["弹簧，螺旋，弯曲--ばね"]
+  },
+  {
+    "name": "tagayasu",
+    "trans": ["耕作，犁田，耕地--耕す"]
+  },
+  {
+    "name": "saji",
+    "trans": ["匙--匙"]
+  },
+  {
+    "name": "tokkuni",
+    "trans": ["很久以前，早就--とっくに"]
+  },
+  {
+    "name": "unto",
+    "trans": ["很多，非常多--うんと"]
+  },
+  {
+    "name": "hikiwake",
+    "trans": ["平局，平手--引分け"]
+  },
+  {
+    "name": "kogoeru",
+    "trans": ["冻结，变冷，变得冰冷--凍える"]
+  },
+  {
+    "name": "maku",
+    "trans": ["播种（种子）--蒔く"]
+  },
+  {
+    "name": "fukeru",
+    "trans": ["变晚，消逝，过去--更ける"]
+  },
+  {
+    "name": "koshiraeru",
+    "trans": ["制造，制作--こしらえる"]
+  },
+  {
+    "name": "togaru",
+    "trans": ["尖锐，变锐，变酸，面露不悦--尖る"]
+  },
+  {
+    "name": "zurasu",
+    "trans": ["推迟，延迟--ずらす"]
+  },
+  {
+    "name": "tsumu",
+    "trans": ["堆积，堆放--積む"]
+  },
+  {
+    "name": "taku",
+    "trans": ["煮，烹调--炊く"]
+  },
+  {
+    "name": "shiraga",
+    "trans": ["白发，时尚漂白头发--白髪"]
+  },
+  {
+    "name": "dotto",
+    "trans": ["突然--どっと"]
+  },
+  {
+    "name": "niwaka",
+    "trans": ["突然的，突兀的，出乎意料的，即兴的--俄"]
+  },
+  {
+    "name": "toraeru",
+    "trans": ["抓住，捉拿，逮捕--捕える"]
+  },
+  {
+    "name": "hosu",
+    "trans": ["晾干，晒干，脱水，喝光--干す"]
+  },
+  {
+    "name": "kutabireru",
+    "trans": ["疲惫，疲倦，精疲力尽--くたびれる"]
+  },
+  {
+    "name": "umeru",
+    "trans": ["埋葬，填平，填满（座位、空缺职位）--埋める"]
+  },
+  {
+    "name": "naguru",
+    "trans": ["打，敲打，击打--なぐる"]
+  },
+  {
+    "name": "hazureru",
+    "trans": ["脱落，脱离，脱节，离谱--外れる"]
+  },
+  {
+    "name": "hineru",
+    "trans": ["扭转（开关），拧，苦思冥想--捻る"]
+  },
+  {
+    "name": "hogaraka",
+    "trans": ["明亮，开朗，悦耳--朗らか"]
+  },
+  {
+    "name": "matagu",
+    "trans": ["跨坐--またぐ"]
+  },
+  {
+    "name": "mikazuki",
+    "trans": ["新月，弯月--三日月"]
+  },
+  {
+    "name": "motareru",
+    "trans": ["倚靠，依靠，斜靠，压在胃上--もたれる"]
+  },
+  {
+    "name": "zureru",
+    "trans": ["滑动，滑落，偏差--滑れる"]
+  },
+  {
+    "name": "itsunomanika",
+    "trans": ["不知不觉，不知何时--いつのまにか"]
+  },
+  {
+    "name": "hagasu",
+    "trans": ["撕开，剥下，剥落--剥す"]
+  },
+  {
+    "name": "kezuru",
+    "trans": ["逐渐削减，逐步减少--削る"]
+  },
+
+  {
+    "name": "makura",
+    "trans": ["枕，长枕--枕"]
+  },
+  {
+    "name": "sumu",
+    "trans": ["--变清"]
+  },
+  {
+    "name": "haneru",
+    "trans": ["跳，跳跃--跳ねる"]
+  },
+  {
+    "name": "konaida",
+    "trans": ["前几天，最近--こないだ"]
+  },
+  {
+    "name": "yatarani",
+    "trans": ["任意的，鲁莽的，盲目地--やたらに"]
+  },
+  {
+    "name": "nadaraka",
+    "trans": ["--平缓"]
+  },
+  {
+    "name": "kama",
+    "trans": ["铁锅，水壶--釜"]
+  },
+  {
+    "name": "tamerau",
+    "trans": ["犹豫，犹豫不决--ためらう"]
+  },
+  {
+    "name": "hakari",
+    "trans": ["秤，磅秤--秤"]
+  },
+  {
+    "name": "hakihaki",
+    "trans": ["清晰地--はきはき"]
+  },
+  {
+    "name": "yattsukeru",
+    "trans": ["攻击（敌人），打败，做完，完结--やっつける"]
+  },
+  {
+    "name": "shimeru",
+    "trans": ["湿润，变湿，潮湿--湿る"]
+  },
+  {
+    "name": "soreru",
+    "trans": ["偏离主题，迷路，走失--逸れる"]
+  },
+  {
+    "name": "kosuru",
+    "trans": ["摩擦，磨擦，打磨，擦玻璃，点火--擦る"]
+  },
+  {
+    "name": "zurari",
+    "trans": ["--整齐地"]
+  },
+  {
+    "name": "nasu",
+    "trans": ["完成，做--為す"]
+  },
+  {
+    "name": "semaru",
+    "trans": ["接近，压迫--迫る"]
+  },
+  {
+    "name": "awatadashii",
+    "trans": ["忙碌，匆忙，混乱，慌乱--あわただしい"]
+  },
+  {
+    "name": "hekomu",
+    "trans": ["凹陷，凹下，屈服，倒塌，塌陷，被拒--凹む"]
+  },
+  {
+    "name": "donaru",
+    "trans": ["喊，大声喊叫--どなる"]
+  },
+  {
+    "name": "soutto",
+    "trans": ["--轻轻地"]
+  },
+  {
+    "name": "sesseto",
+    "trans": ["--忙碌地"]
+  },
+  {
+    "name": "odekake",
+    "trans": ["--外出"]
+  }
+]
