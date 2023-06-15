@@ -620,7 +620,16 @@ export const dictionaries: Dictionary[] = [
     description: '日语N2W',
     category: '日语学习',
     url: 'JapVocabList.N2W.json',
-    length: 1836,
+    length: 83,
+    language: 'romaji',
+  },
+  {
+    id: 'japanese008',
+    name: 'N21',
+    description: '日语N21',
+    category: '日语学习',
+    url: 'JapVocabList.N21.json',
+    length: 3000,
     language: 'romaji',
   },
   {
@@ -629,7 +638,7 @@ export const dictionaries: Dictionary[] = [
     description: '日语N2',
     category: '日语学习',
     url: 'JapVocabList.N2.json',
-    length: 83,
+    length: 1836,
     language: 'romaji',
   },
   {
