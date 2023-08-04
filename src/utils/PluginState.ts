@@ -17,7 +17,6 @@ export default class PluginState {
   public readOnlyIntervalId: NodeJS.Timeout | null
   public placeholder: string
 
-  private isShowPhonetic: boolean
   public _wordVisibility: boolean
   private currentExerciseCount: number
 
@@ -53,12 +52,10 @@ export default class PluginState {
     this.currentExerciseCount = 0
 
     this.chapterLength = getConfig('chapterLength')
-    // this.readOnlyMode = globalState.get('readOnlyMode', false)
     this._readOnlyMode = false
     this.readOnlyIntervalId = null
     this.placeholder = getConfig('placeholder') // 用于控制word不可见时，inputBar中是否出现占位符及样式
 
-    this.isShowPhonetic = getConfig('phonetic')
     this._wordVisibility = globalState.get('wordVisibility', true)
 
     this.voiceLock = false

@@ -81,12 +81,9 @@ export function activate(context: vscode.ExtensionContext) {
           wordBar.show()
           inputBar.show()
           transBar.show()
-          // todo: 只读模式相关设置
           if (pluginState.readOnlyMode) {
             setUpReadOnlyInterval()
           }
-
-          // todo: 随机模式
         } else {
           wordBar.hide()
           inputBar.hide()
