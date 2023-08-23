@@ -9,6 +9,8 @@ import { voicePlayer } from './resource/voice'
 import PluginState from './utils/PluginState'
 
 const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
+const PREV_WORD_COMMAND = 'qwerty-learner.prevWord'
+const NEXT_WORD_COMMAND = 'qwerty-learner.nextWord'
 
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
@@ -16,6 +18,14 @@ export function activate(context: vscode.ExtensionContext) {
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
+  const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -103)
+  const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
+  prevWord.text = '<'
+  prevWord.tooltip = '切换上一个单词'
+  prevWord.command = PREV_WORD_COMMAND
+  nextWord.text = '>'
+  nextWord.tooltip = '切换下一个单词'
+  nextWord.command = NEXT_WORD_COMMAND
   transBar.command = PLAY_VOICE_COMMAND
 
   vscode.workspace.onDidChangeTextDocument((e) => {
@@ -84,6 +94,8 @@ export function activate(context: vscode.ExtensionContext) {
           wordBar.show()
           inputBar.show()
           transBar.show()
+          prevWord.show()
+          nextWord.show()
           if (pluginState.readOnlyMode) {
             setUpReadOnlyInterval()
           }
@@ -91,6 +103,8 @@ export function activate(context: vscode.ExtensionContext) {
           wordBar.hide()
           inputBar.hide()
           transBar.hide()
+          prevWord.hide()
+          nextWord.hide()
           removeReadOnlyInterval()
         }
       }),
@@ -128,6 +142,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }),
       vscode.commands.registerCommand(PLAY_VOICE_COMMAND, playVoice),
+      vscode.commands.registerCommand(PREV_WORD_COMMAND, () => {
+        pluginState.prevWord()
+        initializeBar()
+      }),
+      vscode.commands.registerCommand(NEXT_WORD_COMMAND, () => {
+        pluginState.nextWord()
+        initializeBar()
+      }),
     ],
   )
 
