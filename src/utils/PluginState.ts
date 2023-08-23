@@ -224,7 +224,7 @@ export default class PluginState {
   }
 
   getInitialTransBarContent() {
-    let content = this._getCurrentWordPhonetic() + this.currentWord.trans.join('; ')
+    let content = `/${this._getCurrentWordPhonetic()}/  ${this.currentWord.trans.join('; ')}`
     content = content.replace(/\n/g, ' ')
     return content
   }
