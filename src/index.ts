@@ -8,12 +8,15 @@ import { soundPlayer } from './sound'
 import { voicePlayer } from './resource/voice'
 import PluginState from './utils/PluginState'
 
+const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
+
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
 
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
+  transBar.command = PLAY_VOICE_COMMAND
 
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
@@ -124,6 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
           removeReadOnlyInterval()
         }
       }),
+      vscode.commands.registerCommand(PLAY_VOICE_COMMAND, playVoice),
     ],
   )
 
@@ -132,14 +136,17 @@ export function activate(context: vscode.ExtensionContext) {
     setUpTransBar()
     setUpInputBar()
   }
-  function setUpWordBar() {
-    wordBar.text = pluginState.getInitialWordBarContent()
+  function playVoice() {
     if (pluginState.shouldPlayVoice) {
       pluginState.voiceLock = true
       voicePlayer(pluginState.currentWord.name, () => {
         pluginState.voiceLock = false
       })
     }
+  }
+  function setUpWordBar() {
+    wordBar.text = pluginState.getInitialWordBarContent()
+    playVoice()
   }
   function setUpTransBar() {
     transBar.text = pluginState.getInitialTransBarContent()
