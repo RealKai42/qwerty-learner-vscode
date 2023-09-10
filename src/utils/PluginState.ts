@@ -1,4 +1,4 @@
-import { Dictionary } from '@/typings'
+import { DictionaryResource } from '@/typings'
 import { VoiceType } from './../typings/index'
 import { idDictionaryMap } from './../resource/dictionary'
 import { compareWord, getConfig, getDictFile } from '.'
@@ -10,7 +10,7 @@ export default class PluginState {
 
   private _dictKey: string
   private dictWords: Word[]
-  public dict: Dictionary
+  public dict: DictionaryResource
 
   public chapterLength: number
   private _readOnlyMode: boolean
