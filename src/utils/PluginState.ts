@@ -190,6 +190,20 @@ export default class PluginState {
     this.voiceLock = false
   }
 
+  prevWord() {
+    if (this.order === 0) {
+      if (this.chapter === 0) {
+        this.chapter = this.totalChapters - 1
+      } else {
+        this.chapter -= 1
+      }
+      this.order = this.chapterLength - 1
+    } else {
+      this.order -= 1
+    }
+    this.currentExerciseCount = 0
+  }
+
   nextWord() {
     if (this.order === this.wordList.length - 1) {
       // 结束本章节
@@ -224,7 +238,7 @@ export default class PluginState {
   }
 
   getInitialTransBarContent() {
-    let content = this._getCurrentWordPhonetic() + this.currentWord.trans.join('; ')
+    let content = `/${this._getCurrentWordPhonetic()}/  ${this.currentWord.trans.join('; ')}`
     content = content.replace(/\n/g, ' ')
     return content
   }
