@@ -191,17 +191,10 @@ export default class PluginState {
   }
 
   prevWord() {
-    if (this.order === 0) {
-      if (this.chapter === 0) {
-        this.chapter = this.totalChapters - 1
-      } else {
-        this.chapter -= 1
-      }
-      this.order = this.chapterLength - 1
-    } else {
+    if (this.order > 0) {
       this.order -= 1
+      this.currentExerciseCount = 0
     }
-    this.currentExerciseCount = 0
   }
 
   nextWord() {
