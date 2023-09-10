@@ -27,6 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
   nextWord.tooltip = '切换下一个单词'
   nextWord.command = NEXT_WORD_COMMAND
   transBar.command = PLAY_VOICE_COMMAND
+  transBar.tooltip = '播放发音'
 
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
