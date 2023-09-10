@@ -198,3 +198,7 @@ Win: `ctrl + shift + p`
 - suffix word
 - word roots1
 - ...
+
+## 🌟 Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/Kaiyiwing/qwerty-learner-vscode.svg)](https://starchart.cc/Kaiyiwing/qwerty-learner-vscode)
