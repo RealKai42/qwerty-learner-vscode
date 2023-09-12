@@ -14,6 +14,7 @@ export default class PluginState {
 
   public chapterLength: number
   private _readOnlyMode: boolean
+  private chapterCycle: boolean
   public readOnlyIntervalId: NodeJS.Timeout | null
   public placeholder: string
 
@@ -55,7 +56,7 @@ export default class PluginState {
     this._readOnlyMode = false
     this.readOnlyIntervalId = null
     this.placeholder = getConfig('placeholder') // 用于控制word不可见时，inputBar中是否出现占位符及样式
-
+    this.chapterCycle = getConfig('chapterCycle')
     this._wordVisibility = globalState.get('wordVisibility', true)
 
     this.voiceLock = false
@@ -155,6 +156,9 @@ export default class PluginState {
   get highlightWrongDelay(): number {
     return getConfig('highlightWrongDelay')
   }
+  get chapterCycleMode():boolean {
+    return getConfig('chapterCycle')
+  }
   get readOnlyMode(): boolean {
     return this._readOnlyMode
   }
@@ -199,13 +203,17 @@ export default class PluginState {
 
   nextWord() {
     if (this.order === this.wordList.length - 1) {
+      //是否章节循环
+      if(this.chapterCycle){
+        
+      }else{
       // 结束本章节
-      if (this.chapter === this.totalChapters - 1) {
-        this.chapter = 0
-      } else {
-        this.chapter += 1
+        if (this.chapter === this.totalChapters - 1) {
+          this.chapter = 0
+        } else {
+          this.chapter += 1
+        }
       }
-
       this.order = 0
     } else {
       this.order += 1
