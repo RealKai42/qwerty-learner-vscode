@@ -14,11 +14,6 @@
   },
   "css.lint.unknownAtRules": "ignore",
   "css.validate": false,
-  "cSpell.words": [
-    "rodio",
-    "romaji",
-    "ukphone",
-    "usphone"
-  ],
+  "cSpell.words": ["rodio", "romaji", "ukphone", "usphone"],
   "cmake.configureOnOpen": true
 }
