@@ -155,6 +155,9 @@ export default class PluginState {
   get highlightWrongDelay(): number {
     return getConfig('highlightWrongDelay')
   }
+  get chapterCycleMode():boolean {
+    return getConfig('chapterCycle')
+  }
   get readOnlyMode(): boolean {
     return this._readOnlyMode
   }
@@ -199,11 +202,16 @@ export default class PluginState {
 
   nextWord() {
     if (this.order === this.wordList.length - 1) {
-      // 结束本章节
-      if (this.chapter === this.totalChapters - 1) {
-        this.chapter = 0
-      } else {
-        this.chapter += 1
+      //是否章节循环
+      if(this.chapterCycleMode){
+
+      }else{
+        // 结束本章节
+        if (this.chapter === this.totalChapters - 1) {
+          this.chapter = 0
+        } else {
+          this.chapter += 1
+        }
       }
 
       this.order = 0

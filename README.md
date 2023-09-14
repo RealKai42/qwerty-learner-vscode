@@ -143,6 +143,11 @@ Win: `ctrl + shift + p`
   "type": "boolean",
   "default": false,
   "description": "是否章节内单词顺序随机"
+},
+"qwerty-learner.chapterCycle": {
+  "type": "boolean",
+  "default": false,
+  "description": "是否章节循环"
 }
 ```
 
