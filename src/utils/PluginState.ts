@@ -25,6 +25,7 @@ export default class PluginState {
   public isStart: boolean
   public hasWrong: boolean
   private curInput: string
+  public chapterCycleMode: boolean
 
   public voiceLock: boolean
 
@@ -55,6 +56,7 @@ export default class PluginState {
     this._readOnlyMode = false
     this.readOnlyIntervalId = null
     this.placeholder = getConfig('placeholder') // 用于控制word不可见时，inputBar中是否出现占位符及样式
+    this.chapterCycleMode = false
 
     this._wordVisibility = globalState.get('wordVisibility', true)
 
@@ -199,11 +201,15 @@ export default class PluginState {
 
   nextWord() {
     if (this.order === this.wordList.length - 1) {
-      // 结束本章节
-      if (this.chapter === this.totalChapters - 1) {
-        this.chapter = 0
+      //是否章节循环
+      if (this.chapterCycleMode) {
       } else {
-        this.chapter += 1
+        // 结束本章节
+        if (this.chapter === this.totalChapters - 1) {
+          this.chapter = 0
+        } else {
+          this.chapter += 1
+        }
       }
 
       this.order = 0

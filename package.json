@@ -41,7 +41,8 @@
   "activationEvents": [
     "onCommand:qwerty-learner.start",
     "onCommand:qwerty-learner.changeChapter",
-    "onCommand:qwerty-learner.changeDict"
+    "onCommand:qwerty-learner.changeDict",
+    "onCommand:qwerty-learner.toggleChapterCycle"
   ],
   "contributes": {
     "commands": [
@@ -64,6 +65,10 @@
       {
         "command": "qwerty-learner.toggleReadOnlyMode",
         "title": "Qwerty Learner Toggle Read Only Mode"
+      },
+      {
+        "command": "qwerty-learner.toggleChapterCycleMode",
+        "title": "Qwerty Learner Change chapter Cycle Mode"
       }
     ],
     "keybindings": [
@@ -71,6 +76,12 @@
         "command": "qwerty-learner.start",
         "key": "shift+alt+q",
         "mac": "ctrl+shift+q",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "qwerty-learner.toggleChapterCycleMode",
+        "key": "shift+alt+c",
+        "mac": "ctrl+shift+c",
         "when": "editorTextFocus"
       }
     ],

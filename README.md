@@ -64,10 +64,18 @@
 - Start/Pause 可以开关插件，功能等价于一键启动快捷键
 - Toggle Word Visibility 切换是否展示单词（默写模式）
 - Toggle Read Only Mode 开关只读模式
+- Toggle Chapter Cycle Mode 章节循环模式
 
 命令面板快捷键  
 Mac: `cmd + shift + p`  
 Win: `ctrl + shift + p`
+
+### 快捷配置
+
+这里列出了用于启用/禁用章节循环模式的快捷键配置。章节循环模式默认情况下是禁用的。
+
+- **Mac**: 使用键盘快捷键 `Control + Shift + C` 可以启用/禁用章节循环模式。
+- **Win**: 使用键盘快捷键 `Shift + Alt + C` 可以启用/禁用章节循环模式。
 
 ### 进阶配置
 
@@ -143,6 +151,11 @@ Win: `ctrl + shift + p`
   "type": "boolean",
   "default": false,
   "description": "是否章节内单词顺序随机"
+},
+"qwerty-learner.chapterCycle": {
+  "type": "boolean",
+  "default": false,
+  "description": "是否章节循环"
 }
 ```
 
