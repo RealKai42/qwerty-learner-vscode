@@ -214,4 +214,4 @@ Win: `ctrl + shift + p`
 
 ## 🌟 Stargazers over time
 
-[![Stargazers over time](https://starchart.cc/Kaiyiwing/qwerty-learner-vscode.svg)](https://starchart.cc/Kaiyiwing/qwerty-learner-vscode)
+[![Stargazers over time](https://starchart.cc/Kaiyiwing/qwerty-learner-vscode)](https://starchart.cc/Kaiyiwing/qwerty-learner-vscode)
