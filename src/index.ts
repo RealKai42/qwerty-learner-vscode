@@ -150,6 +150,14 @@ export function activate(context: vscode.ExtensionContext) {
         pluginState.nextWord()
         initializeBar()
       }),
+      vscode.commands.registerCommand('qwerty-learner.toggleChapterCycleMode', () => {
+        pluginState.chapterCycleMode = !pluginState.chapterCycleMode
+        if (pluginState.chapterCycleMode) {
+          vscode.window.showInformationMessage('章节循环模式已开启');
+        } else {
+          vscode.window.showInformationMessage('章节循环模式已关闭');
+        }
+    })
     ],
   )
 

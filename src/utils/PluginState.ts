@@ -25,6 +25,7 @@ export default class PluginState {
   public isStart: boolean
   public hasWrong: boolean
   private curInput: string
+  public chapterCycleMode :boolean
 
   public voiceLock: boolean
 
@@ -55,6 +56,7 @@ export default class PluginState {
     this._readOnlyMode = false
     this.readOnlyIntervalId = null
     this.placeholder = getConfig('placeholder') // 用于控制word不可见时，inputBar中是否出现占位符及样式
+    this.chapterCycleMode = false
 
     this._wordVisibility = globalState.get('wordVisibility', true)
 
@@ -154,9 +156,6 @@ export default class PluginState {
   }
   get highlightWrongDelay(): number {
     return getConfig('highlightWrongDelay')
-  }
-  get chapterCycleMode():boolean {
-    return getConfig('chapterCycle')
   }
   get readOnlyMode(): boolean {
     return this._readOnlyMode
