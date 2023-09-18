@@ -77,7 +77,6 @@ Win: `ctrl + shift + p`
 - **Mac**: 使用键盘快捷键 `Control + Shift + C` 可以启用/禁用章节循环模式。
 - **Win**: 使用键盘快捷键 `Shift + Alt + C` 可以启用/禁用章节循环模式。
 
-
 ### 进阶配置
 
 可以在设置面板查找关键字 “Qwerty” 修改设置

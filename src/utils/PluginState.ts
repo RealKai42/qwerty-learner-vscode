@@ -25,7 +25,7 @@ export default class PluginState {
   public isStart: boolean
   public hasWrong: boolean
   private curInput: string
-  public chapterCycleMode :boolean
+  public chapterCycleMode: boolean
 
   public voiceLock: boolean
 
@@ -202,9 +202,8 @@ export default class PluginState {
   nextWord() {
     if (this.order === this.wordList.length - 1) {
       //是否章节循环
-      if(this.chapterCycleMode){
-
-      }else{
+      if (this.chapterCycleMode) {
+      } else {
         // 结束本章节
         if (this.chapter === this.totalChapters - 1) {
           this.chapter = 0

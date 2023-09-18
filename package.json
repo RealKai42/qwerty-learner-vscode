@@ -80,10 +80,10 @@
       },
       {
         "command": "qwerty-learner.toggleChapterCycleMode",
-        "key": "shift+alt+c", 
+        "key": "shift+alt+c",
         "mac": "ctrl+shift+c",
         "when": "editorTextFocus"
-    }
+      }
     ],
     "configuration": {
       "title": "Qwerty Learner",
