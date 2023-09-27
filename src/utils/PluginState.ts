@@ -11,6 +11,7 @@ export default class PluginState {
   private _dictKey: string
   private dictWords: Word[]
   public dict: DictionaryResource
+  public hideDicName = false
 
   public chapterLength: number
   private _readOnlyMode: boolean
@@ -218,9 +219,13 @@ export default class PluginState {
     }
     this.currentExerciseCount = 0
   }
+  toggleDicName(){
+    this.hideDicName = !this.hideDicName;
+  }
 
   getInitialWordBarContent() {
-    return `${this.dict.name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${
+    const name = this.hideDicName ? '' : this.dict.name;
+    return `${name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${
       this.wordVisibility ? this.currentWord.name : ''
     }`
   }
