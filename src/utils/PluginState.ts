@@ -11,6 +11,7 @@ export default class PluginState {
   private _dictKey: string
   private dictWords: Word[]
   public dict: DictionaryResource
+  public hideDicName : boolean
 
   public chapterLength: number
   private _readOnlyMode: boolean
@@ -43,6 +44,7 @@ export default class PluginState {
     this._dictKey = globalState.get('dictKey', 'cet4')
     this.dict = idDictionaryMap[this._dictKey]
     this.dictWords = []
+    this.hideDicName = false
     this.loadDict()
 
     this._order = globalState.get('order', 0)
@@ -218,9 +220,13 @@ export default class PluginState {
     }
     this.currentExerciseCount = 0
   }
+  toggleDicName(){
+    this.hideDicName = !this.hideDicName;
+  }
 
   getInitialWordBarContent() {
-    return `${this.dict.name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${
+    const name = this.hideDicName ? '' : this.dict.name;
+    return `${name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${
       this.wordVisibility ? this.currentWord.name : ''
     }`
   }

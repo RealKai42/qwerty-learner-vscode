@@ -10,6 +10,7 @@ import PluginState from './utils/PluginState'
 const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
 const PREV_WORD_COMMAND = 'qwerty-learner.prevWord'
 const NEXT_WORD_COMMAND = 'qwerty-learner.nextWord'
+const TOGGLE_DIC_NAME_COMMAND= 'qwerty-learner.toggleDicName'
 
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
@@ -27,6 +28,8 @@ export function activate(context: vscode.ExtensionContext) {
   nextWord.command = NEXT_WORD_COMMAND
   transBar.command = PLAY_VOICE_COMMAND
   transBar.tooltip = '播放发音'
+  wordBar.command = TOGGLE_DIC_NAME_COMMAND
+  wordBar.tooltip = '隐藏/显示字典名称'
 
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
@@ -142,6 +145,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }),
       vscode.commands.registerCommand(PLAY_VOICE_COMMAND, playVoice),
+      vscode.commands.registerCommand(TOGGLE_DIC_NAME_COMMAND, toggleDicName),
       vscode.commands.registerCommand(PREV_WORD_COMMAND, () => {
         pluginState.prevWord()
         initializeBar()
@@ -149,6 +153,10 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.commands.registerCommand(NEXT_WORD_COMMAND, () => {
         pluginState.nextWord()
         initializeBar()
+      }),
+      vscode.commands.registerCommand('TOGGLE_DIC_NAME_COMMAND', () => {
+        pluginState.toggleDicName()
+        initializeBar();
       }),
       vscode.commands.registerCommand('qwerty-learner.toggleChapterCycleMode', () => {
         pluginState.chapterCycleMode = !pluginState.chapterCycleMode
@@ -165,6 +173,10 @@ export function activate(context: vscode.ExtensionContext) {
     setUpWordBar()
     setUpTransBar()
     setUpInputBar()
+  }
+  function toggleDicName() {
+    pluginState.hideDicName = !pluginState.hideDicName;
+    wordBar.text = pluginState.getInitialWordBarContent(); 
   }
   function playVoice() {
     if (pluginState.shouldPlayVoice) {
