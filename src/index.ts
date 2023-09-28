@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
-  const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
+  const playVoiceBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
   const translationBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -103)
   const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
   const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -105)
@@ -27,9 +27,9 @@ export function activate(context: vscode.ExtensionContext) {
   nextWord.text = '>'
   nextWord.tooltip = '切换下一个单词'
   nextWord.command = NEXT_WORD_COMMAND
-  transBar.command = PLAY_VOICE_COMMAND
-  transBar.tooltip = '播放发音'
-  translationBar.tooltip = '显示/隐藏中文翻译'
+  playVoiceBar.command = PLAY_VOICE_COMMAND
+  playVoiceBar.tooltip = '播放发音'
+  translationBar.tooltip = '显示/隐藏中文翻译' 
   translationBar.command = 'TOGGLE_TRANSLATION_COMMAND'
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
@@ -96,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
           initializeBar()
           wordBar.show()
           inputBar.show()
-          transBar.show()
+          playVoiceBar.show()
           prevWord.show()
           nextWord.show()
           translationBar.show()
@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
           wordBar.hide()
           inputBar.hide()
-          transBar.hide()
+          playVoiceBar.hide()
           prevWord.hide()
           nextWord.hide()
           translationBar.hide()
@@ -173,7 +173,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   function initializeBar() {
     setUpWordBar()
-    setUpTransBar()
+    setUpplayVoiceBar()
     setUpTranslationBar()
     setUpInputBar()
   }
@@ -189,8 +189,8 @@ export function activate(context: vscode.ExtensionContext) {
     wordBar.text = pluginState.getInitialWordBarContent()
     playVoice()
   }
-  function setUpTransBar() {
-    transBar.text = pluginState.getInitialTransBarContent()
+  function setUpplayVoiceBar() {
+    playVoiceBar.text = pluginState.getInitialplayVoiceBarContent()
   }
   function setUpTranslationBar() {
     translationBar.text = pluginState.getInitialtranslationBarContent()

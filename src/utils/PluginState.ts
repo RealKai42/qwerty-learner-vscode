@@ -241,7 +241,7 @@ export default class PluginState {
     return content
   }
 
-  getInitialTransBarContent() {
+  getInitialplayVoiceBarContent() {
     let content = `/${this._getCurrentWordPhonetic()}/}`
     content = content.replace(/\n/g, ' ')
     return content
