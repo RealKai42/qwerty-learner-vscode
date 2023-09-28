@@ -10,6 +10,7 @@ import PluginState from './utils/PluginState'
 const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
 const PREV_WORD_COMMAND = 'qwerty-learner.prevWord'
 const NEXT_WORD_COMMAND = 'qwerty-learner.nextWord'
+const TOGGLE_TRANSLATION_COMMAND = 'qwerty-learner.toggleTranslation'
 
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
@@ -17,8 +18,9 @@ export function activate(context: vscode.ExtensionContext) {
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
-  const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -103)
-  const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
+  const translationBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -103)
+  const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
+  const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -105)
   prevWord.text = '<'
   prevWord.tooltip = '切换上一个单词'
   prevWord.command = PREV_WORD_COMMAND
@@ -27,7 +29,8 @@ export function activate(context: vscode.ExtensionContext) {
   nextWord.command = NEXT_WORD_COMMAND
   transBar.command = PLAY_VOICE_COMMAND
   transBar.tooltip = '播放发音'
-
+  translationBar.tooltip = '显示/隐藏中文翻译'
+  translationBar.command = 'TOGGLE_TRANSLATION_COMMAND'
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
       return
@@ -96,6 +99,7 @@ export function activate(context: vscode.ExtensionContext) {
           transBar.show()
           prevWord.show()
           nextWord.show()
+          translationBar.show()
           if (pluginState.readOnlyMode) {
             setUpReadOnlyInterval()
           }
@@ -105,6 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
           transBar.hide()
           prevWord.hide()
           nextWord.hide()
+          translationBar.hide()
           removeReadOnlyInterval()
         }
       }),
@@ -142,6 +147,11 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }),
       vscode.commands.registerCommand(PLAY_VOICE_COMMAND, playVoice),
+  
+      vscode.commands.registerCommand('TOGGLE_TRANSLATION_COMMAND', () => {
+        pluginState.toggleTranslation()
+        initializeBar();
+      }),
       vscode.commands.registerCommand(PREV_WORD_COMMAND, () => {
         pluginState.prevWord()
         initializeBar()
@@ -164,6 +174,7 @@ export function activate(context: vscode.ExtensionContext) {
   function initializeBar() {
     setUpWordBar()
     setUpTransBar()
+    setUpTranslationBar()
     setUpInputBar()
   }
   function playVoice() {
@@ -180,6 +191,9 @@ export function activate(context: vscode.ExtensionContext) {
   }
   function setUpTransBar() {
     transBar.text = pluginState.getInitialTransBarContent()
+  }
+  function setUpTranslationBar() {
+    translationBar.text = pluginState.getInitialtranslationBarContent()
   }
   function setUpInputBar() {
     inputBar.text = pluginState.getInitialInputBarContent()

@@ -28,6 +28,7 @@ export default class PluginState {
   public chapterCycleMode: boolean
 
   public voiceLock: boolean
+  public translationVisible: boolean
 
   private _wordList: {
     wordList: Word[]
@@ -62,6 +63,7 @@ export default class PluginState {
 
     this.voiceLock = false
 
+    this.translationVisible = true
     this._wordList = {
       wordList: [],
       chapter: 0,
@@ -219,6 +221,9 @@ export default class PluginState {
     this.currentExerciseCount = 0
   }
 
+  toggleTranslation() {
+    this.translationVisible = !this.translationVisible
+  }
   getInitialWordBarContent() {
     return `${this.dict.name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${
       this.wordVisibility ? this.currentWord.name : ''
@@ -237,8 +242,12 @@ export default class PluginState {
   }
 
   getInitialTransBarContent() {
-    let content = `/${this._getCurrentWordPhonetic()}/  ${this.currentWord.trans.join('; ')}`
+    let content = `/${this._getCurrentWordPhonetic()}/}`
     content = content.replace(/\n/g, ' ')
+    return content
+  }
+  getInitialtranslationBarContent() {
+    const content = this.translationVisible ? '👁' : this.currentWord.trans.join('; ');
     return content
   }
 
