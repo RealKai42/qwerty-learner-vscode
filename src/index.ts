@@ -11,6 +11,7 @@ const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
 const PREV_WORD_COMMAND = 'qwerty-learner.prevWord'
 const NEXT_WORD_COMMAND = 'qwerty-learner.nextWord'
 const TOGGLE_TRANSLATION_COMMAND = 'qwerty-learner.toggleTranslation'
+const TOGGLE_DIC_NAME_COMMAND = 'qwerty-learner.toggleDicName'
 
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
@@ -29,8 +30,11 @@ export function activate(context: vscode.ExtensionContext) {
   nextWord.command = NEXT_WORD_COMMAND
   playVoiceBar.command = PLAY_VOICE_COMMAND
   playVoiceBar.tooltip = '播放发音'
-  translationBar.tooltip = '显示/隐藏中文翻译' 
-  translationBar.command = 'TOGGLE_TRANSLATION_COMMAND'
+  translationBar.tooltip = '显示/隐藏中文翻译'
+  translationBar.command = TOGGLE_TRANSLATION_COMMAND
+  wordBar.command = TOGGLE_DIC_NAME_COMMAND
+  wordBar.tooltip = '隐藏/显示字典名称'
+
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
       return
@@ -147,10 +151,13 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }),
       vscode.commands.registerCommand(PLAY_VOICE_COMMAND, playVoice),
-  
-      vscode.commands.registerCommand('TOGGLE_TRANSLATION_COMMAND', () => {
+      vscode.commands.registerCommand(TOGGLE_TRANSLATION_COMMAND, () => {
         pluginState.toggleTranslation()
-        initializeBar();
+        initializeBar()
+      }),
+      vscode.commands.registerCommand(TOGGLE_DIC_NAME_COMMAND, () => {
+        pluginState.toggleDictName()
+        wordBar.text = pluginState.getInitialWordBarContent()
       }),
       vscode.commands.registerCommand(PREV_WORD_COMMAND, () => {
         pluginState.prevWord()
@@ -173,7 +180,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   function initializeBar() {
     setUpWordBar()
-    setUpplayVoiceBar()
+    setUpPlayVoiceBar()
     setUpTranslationBar()
     setUpInputBar()
   }
@@ -189,11 +196,11 @@ export function activate(context: vscode.ExtensionContext) {
     wordBar.text = pluginState.getInitialWordBarContent()
     playVoice()
   }
-  function setUpplayVoiceBar() {
-    playVoiceBar.text = pluginState.getInitialplayVoiceBarContent()
+  function setUpPlayVoiceBar() {
+    playVoiceBar.text = pluginState.getInitialPlayVoiceBarContent()
   }
   function setUpTranslationBar() {
-    translationBar.text = pluginState.getInitialtranslationBarContent()
+    translationBar.text = pluginState.getInitialTranslationBarContent()
   }
   function setUpInputBar() {
     inputBar.text = pluginState.getInitialInputBarContent()

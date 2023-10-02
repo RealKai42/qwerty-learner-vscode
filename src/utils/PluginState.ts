@@ -11,6 +11,7 @@ export default class PluginState {
   private _dictKey: string
   private dictWords: Word[]
   public dict: DictionaryResource
+  public hideDictName: boolean
 
   public chapterLength: number
   private _readOnlyMode: boolean
@@ -44,6 +45,7 @@ export default class PluginState {
     this._dictKey = globalState.get('dictKey', 'cet4')
     this.dict = idDictionaryMap[this._dictKey]
     this.dictWords = []
+    this.hideDictName = false
     this.loadDict()
 
     this._order = globalState.get('order', 0)
@@ -220,14 +222,16 @@ export default class PluginState {
     }
     this.currentExerciseCount = 0
   }
+  toggleDictName() {
+    this.hideDictName = !this.hideDictName
+  }
 
   toggleTranslation() {
     this.translationVisible = !this.translationVisible
   }
   getInitialWordBarContent() {
-    return `${this.dict.name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${
-      this.wordVisibility ? this.currentWord.name : ''
-    }`
+    const name = this.hideDictName ? '' : this.dict.name
+    return `${name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${this.wordVisibility ? this.currentWord.name : ''}`
   }
 
   getInitialInputBarContent() {
@@ -241,13 +245,13 @@ export default class PluginState {
     return content
   }
 
-  getInitialplayVoiceBarContent() {
+  getInitialPlayVoiceBarContent() {
     let content = `/${this._getCurrentWordPhonetic()}/}`
     content = content.replace(/\n/g, ' ')
     return content
   }
-  getInitialtranslationBarContent() {
-    const content = this.translationVisible ? '👁' : this.currentWord.trans.join('; ');
+  getInitialTranslationBarContent() {
+    const content = this.translationVisible ? '$(eye)' : this.currentWord.trans.join('; ')
     return content
   }
 
