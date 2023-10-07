@@ -40,6 +40,10 @@ export function activate(context: vscode.ExtensionContext) {
       return
     }
 
+    if (pluginState.readOnlyMode) {
+      return
+    }
+
     const { uri } = e.document
     // 避免破坏配置文件
     if (uri.scheme.indexOf('vscode') !== -1) {
