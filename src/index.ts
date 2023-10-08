@@ -1,10 +1,10 @@
-import { dictionaries } from './resource/dictionary'
-import { DictPickItem } from './typings/index'
-import * as vscode from 'vscode'
 import { range } from 'lodash'
-import { getConfig } from './utils'
-import { soundPlayer } from './sound'
+import * as vscode from 'vscode'
+import { dictionaries } from './resource/dictionary'
 import { voicePlayer } from './resource/voice'
+import { soundPlayer } from './sound'
+import { DictPickItem } from './typings/index'
+import { getConfig } from './utils'
 import PluginState from './utils/PluginState'
 
 const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
@@ -43,33 +43,61 @@ export function activate(context: vscode.ExtensionContext) {
     if (!(text !== '' && text.length === 1)) {
       return
     }
-    // 删除用户输入的字符
-    const newRange = new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character + 1)
-    const editAction = new vscode.WorkspaceEdit()
-    editAction.delete(uri, newRange)
-    vscode.workspace.applyEdit(editAction)
-    if (pluginState.hasWrong) {
-      return
-    }
-    soundPlayer('click')
-    inputBar.text = pluginState.getCurrentInputBarContent(text)
 
-    const compareResult = pluginState.compareResult
-    if (compareResult === -2) {
-      // 用户完成单词输入
-      soundPlayer('success')
-      pluginState.finishWord()
-      initializeBar()
-    } else if (compareResult >= 0) {
-      pluginState.wrongInput()
-      inputBar.color = pluginState.highlightWrongColor
-      soundPlayer('wrong')
-      setTimeout(() => {
-        pluginState.clearWrong()
-        inputBar.color = undefined
+    if(pluginState.autoCaptureMode === false) {
+
+      // 删除用户输入的字符
+      const newRange = new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character + 1)
+      const editAction = new vscode.WorkspaceEdit()
+      editAction.delete(uri, newRange)
+      vscode.workspace.applyEdit(editAction)
+      if (pluginState.hasWrong) {
+        return
+      }
+      soundPlayer('click')
+      inputBar.text = pluginState.getCurrentInputBarContent(text)
+
+      const compareResult = pluginState.compareResult
+      if (compareResult === -2) {
+        // 用户完成单词输入
+        soundPlayer('success')
+        pluginState.finishWord()
         initializeBar()
-      }, pluginState.highlightWrongDelay)
+      } else if (compareResult >= 0) {
+        pluginState.wrongInput()
+        inputBar.color = pluginState.highlightWrongColor
+        soundPlayer('wrong')
+        setTimeout(() => {
+          pluginState.clearWrong()
+          inputBar.color = undefined
+          initializeBar()
+        }, pluginState.highlightWrongDelay)
+      }
+    }else {
+
+      const expectedInput = pluginState.currentWord.name;  // 期望的单词
+      const expectedInputLength = expectedInput.length;  // 期望的单词的长度
+
+      pluginState.getCurrentInputBarContent(text)
+      
+      // 删除正确匹配的单词字符
+      if (pluginState.compareResult === -2) {
+
+              const newRange = new vscode.Range(range.start.line, range.start.character - expectedInputLength, range.end.line, range.end.character + 1);
+              const editAction = new vscode.WorkspaceEdit();
+              editAction.delete(uri, newRange);
+              vscode.workspace.applyEdit(editAction);
+
+              // 执行其他逻辑，比如播放声音，更新状态等
+              soundPlayer('success');
+              pluginState.finishWord()
+              initializeBar()
+      } else if (pluginState.compareResult >= 0) {
+        pluginState.wrongInput()
+        pluginState.clearWrong()
+      }
     }
+
   })
 
   vscode.workspace.onDidChangeConfiguration((event) => {
@@ -156,6 +184,14 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.window.showInformationMessage('章节循环模式已开启')
         } else {
           vscode.window.showInformationMessage('章节循环模式已关闭')
+        }
+      }),
+      vscode.commands.registerCommand('qwerty-learner.toggleAutoCaptureMode', () => {
+        pluginState.autoCaptureMode = !pluginState.autoCaptureMode
+        if (pluginState.autoCaptureMode) {
+          vscode.window.showInformationMessage('自动捕获模式已开启')
+        } else {
+          vscode.window.showInformationMessage('自动捕获模式已关闭')
         }
       }),
     ],
