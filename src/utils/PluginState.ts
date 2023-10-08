@@ -11,6 +11,7 @@ export default class PluginState {
   private _dictKey: string
   private dictWords: Word[]
   public dict: DictionaryResource
+  public hideDictName: boolean
 
   public chapterLength: number
   private _readOnlyMode: boolean
@@ -29,6 +30,7 @@ export default class PluginState {
   public autoCaptureMode: boolean
 
   public voiceLock: boolean
+  public translationVisible: boolean
 
   private _wordList: {
     wordList: Word[]
@@ -44,6 +46,7 @@ export default class PluginState {
     this._dictKey = globalState.get('dictKey', 'cet4')
     this.dict = idDictionaryMap[this._dictKey]
     this.dictWords = []
+    this.hideDictName = false
     this.loadDict()
 
     this._order = globalState.get('order', 0)
@@ -65,6 +68,7 @@ export default class PluginState {
 
     this.voiceLock = false
 
+    this.translationVisible = true
     this._wordList = {
       wordList: [],
       chapter: 0,
@@ -221,11 +225,16 @@ export default class PluginState {
     }
     this.currentExerciseCount = 0
   }
+  toggleDictName() {
+    this.hideDictName = !this.hideDictName
+  }
 
+  toggleTranslation() {
+    this.translationVisible = !this.translationVisible
+  }
   getInitialWordBarContent() {
-    return `${this.dict.name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${
-      this.wordVisibility ? this.currentWord.name : ''
-    }`
+    const name = this.hideDictName ? '' : this.dict.name
+    return `${name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${this.wordVisibility ? this.currentWord.name : ''}`
   }
 
   getInitialInputBarContent() {
@@ -239,9 +248,13 @@ export default class PluginState {
     return content
   }
 
-  getInitialTransBarContent() {
-    let content = `/${this._getCurrentWordPhonetic()}/  ${this.currentWord.trans.join('; ')}`
+  getInitialPlayVoiceBarContent() {
+    let content = `/${this._getCurrentWordPhonetic()}/}`
     content = content.replace(/\n/g, ' ')
+    return content
+  }
+  getInitialTranslationBarContent() {
+    const content = this.translationVisible ? '$(eye)' : this.currentWord.trans.join('; ')
     return content
   }
 

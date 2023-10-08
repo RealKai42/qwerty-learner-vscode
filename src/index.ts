@@ -10,26 +10,37 @@ import PluginState from './utils/PluginState'
 const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
 const PREV_WORD_COMMAND = 'qwerty-learner.prevWord'
 const NEXT_WORD_COMMAND = 'qwerty-learner.nextWord'
+const TOGGLE_TRANSLATION_COMMAND = 'qwerty-learner.toggleTranslation'
+const TOGGLE_DIC_NAME_COMMAND = 'qwerty-learner.toggleDicName'
 
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
 
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
-  const transBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
-  const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -103)
-  const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
+  const playVoiceBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
+  const translationBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -103)
+  const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
+  const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -105)
   prevWord.text = '<'
   prevWord.tooltip = '切换上一个单词'
   prevWord.command = PREV_WORD_COMMAND
   nextWord.text = '>'
   nextWord.tooltip = '切换下一个单词'
   nextWord.command = NEXT_WORD_COMMAND
-  transBar.command = PLAY_VOICE_COMMAND
-  transBar.tooltip = '播放发音'
+  playVoiceBar.command = PLAY_VOICE_COMMAND
+  playVoiceBar.tooltip = '播放发音'
+  translationBar.tooltip = '显示/隐藏中文翻译'
+  translationBar.command = TOGGLE_TRANSLATION_COMMAND
+  wordBar.command = TOGGLE_DIC_NAME_COMMAND
+  wordBar.tooltip = '隐藏/显示字典名称'
 
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
+      return
+    }
+
+    if (pluginState.readOnlyMode) {
       return
     }
 
@@ -121,18 +132,20 @@ export function activate(context: vscode.ExtensionContext) {
           initializeBar()
           wordBar.show()
           inputBar.show()
-          transBar.show()
+          playVoiceBar.show()
           prevWord.show()
           nextWord.show()
+          translationBar.show()
           if (pluginState.readOnlyMode) {
             setUpReadOnlyInterval()
           }
         } else {
           wordBar.hide()
           inputBar.hide()
-          transBar.hide()
+          playVoiceBar.hide()
           prevWord.hide()
           nextWord.hide()
+          translationBar.hide()
           removeReadOnlyInterval()
         }
       }),
@@ -170,6 +183,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }),
       vscode.commands.registerCommand(PLAY_VOICE_COMMAND, playVoice),
+      vscode.commands.registerCommand(TOGGLE_TRANSLATION_COMMAND, () => {
+        pluginState.toggleTranslation()
+        initializeBar()
+      }),
+      vscode.commands.registerCommand(TOGGLE_DIC_NAME_COMMAND, () => {
+        pluginState.toggleDictName()
+        wordBar.text = pluginState.getInitialWordBarContent()
+      }),
       vscode.commands.registerCommand(PREV_WORD_COMMAND, () => {
         pluginState.prevWord()
         initializeBar()
@@ -199,7 +220,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   function initializeBar() {
     setUpWordBar()
-    setUpTransBar()
+    setUpPlayVoiceBar()
+    setUpTranslationBar()
     setUpInputBar()
   }
   function playVoice() {
@@ -214,8 +236,11 @@ export function activate(context: vscode.ExtensionContext) {
     wordBar.text = pluginState.getInitialWordBarContent()
     playVoice()
   }
-  function setUpTransBar() {
-    transBar.text = pluginState.getInitialTransBarContent()
+  function setUpPlayVoiceBar() {
+    playVoiceBar.text = pluginState.getInitialPlayVoiceBarContent()
+  }
+  function setUpTranslationBar() {
+    translationBar.text = pluginState.getInitialTranslationBarContent()
   }
   function setUpInputBar() {
     inputBar.text = pluginState.getInitialInputBarContent()
