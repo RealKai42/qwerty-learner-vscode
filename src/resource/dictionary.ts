@@ -525,6 +525,17 @@ const internationalExam: DictionaryResource[] = [
     languageCategory: 'en',
   },
   {
+    id: 'heqiong',
+    name: '何琼雅思听力必考词汇',
+    description: '综合测试',
+    category: '国际考试',
+    tags: ['IELTS'],
+    url: 'HeQiong_IELTS.json',
+    length: 2536,
+    language: 'en',
+    languageCategory: 'en',
+  }, 
+  {
     id: 'sat',
     name: 'SAT',
     description: '美国 SAT 考试词库',
