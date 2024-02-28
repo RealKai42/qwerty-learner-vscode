@@ -51,11 +51,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     const { range, text, rangeLength } = e.contentChanges[0]
-    if (!(text !== '' && text.length === 1)) {
+    if (!(text !== '') || text.length === 0) {
       return
     }
     // 删除用户输入的字符
-    const newRange = new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character + 1)
+    const newRange = new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character + text.length)
     const editAction = new vscode.WorkspaceEdit()
     editAction.delete(uri, newRange)
     vscode.workspace.applyEdit(editAction)
