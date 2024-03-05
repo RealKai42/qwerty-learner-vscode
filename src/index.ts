@@ -23,10 +23,10 @@ export function activate(context: vscode.ExtensionContext) {
   const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
   const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -105)
   prevWord.text = '<'
-  prevWord.tooltip = '切换上一个单词'
+  prevWord.tooltip = '切换上一个单词(👈)'
   prevWord.command = PREV_WORD_COMMAND
   nextWord.text = '>'
-  nextWord.tooltip = '切换下一个单词'
+  nextWord.tooltip = '切换下一个单词(👉)'
   nextWord.command = NEXT_WORD_COMMAND
   playVoiceBar.command = PLAY_VOICE_COMMAND
   playVoiceBar.tooltip = '播放发音'
