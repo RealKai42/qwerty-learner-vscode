@@ -23,10 +23,10 @@ export function activate(context: vscode.ExtensionContext) {
   const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
   const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -105)
   prevWord.text = '<'
-  prevWord.tooltip = '切换上一个单词'
+  prevWord.tooltip = '切换上一个单词(👈)'
   prevWord.command = PREV_WORD_COMMAND
   nextWord.text = '>'
-  nextWord.tooltip = '切换下一个单词'
+  nextWord.tooltip = '切换下一个单词(👉)'
   nextWord.command = NEXT_WORD_COMMAND
   playVoiceBar.command = PLAY_VOICE_COMMAND
   playVoiceBar.tooltip = '播放发音'
@@ -102,6 +102,7 @@ export function activate(context: vscode.ExtensionContext) {
         pluginState.isStart = !pluginState.isStart
         if (pluginState.isStart) {
           initializeBar()
+          vscode.commands.executeCommand('setContext', 'qwer.showTyping', true);
           wordBar.show()
           inputBar.show()
           playVoiceBar.show()
@@ -112,6 +113,7 @@ export function activate(context: vscode.ExtensionContext) {
             setUpReadOnlyInterval()
           }
         } else {
+          vscode.commands.executeCommand('setContext', 'qwer.showTyping', false);
           wordBar.hide()
           inputBar.hide()
           playVoiceBar.hide()
