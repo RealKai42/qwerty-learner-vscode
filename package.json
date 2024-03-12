@@ -93,6 +93,11 @@
         "command": "qwerty-learner.nextWord",
         "key": "[ArrowRight]",
         "when": "editorTextFocus && qwer.showTyping"
+      },
+      {
+        "command": "qwerty-learner.copyWordName",
+        "key": "[ArrowUp]",
+        "when": "editorTextFocus && qwer.showTyping"
       }
     ],
     "configuration": {
