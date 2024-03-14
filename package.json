@@ -83,6 +83,21 @@
         "key": "shift+alt+c",
         "mac": "ctrl+shift+c",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "qwerty-learner.prevWord",
+        "key": "[ArrowLeft]",
+        "when": "editorTextFocus && qwer.showTyping"
+      },
+      {
+        "command": "qwerty-learner.nextWord",
+        "key": "[ArrowRight]",
+        "when": "editorTextFocus && qwer.showTyping"
+      },
+      {
+        "command": "qwerty-learner.copyWordName",
+        "key": "[ArrowUp]",
+        "when": "editorTextFocus && qwer.showTyping"
       }
     ],
     "configuration": {

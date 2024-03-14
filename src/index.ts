@@ -12,28 +12,32 @@ const PREV_WORD_COMMAND = 'qwerty-learner.prevWord'
 const NEXT_WORD_COMMAND = 'qwerty-learner.nextWord'
 const TOGGLE_TRANSLATION_COMMAND = 'qwerty-learner.toggleTranslation'
 const TOGGLE_DIC_NAME_COMMAND = 'qwerty-learner.toggleDicName'
+const COPY_WORD_COMMAND = 'qwerty-learner.copyWordName'
 
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
 
+  const dictBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -99)
   const wordBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100)
   const inputBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -101)
   const playVoiceBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -102)
   const translationBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -103)
   const prevWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -104)
   const nextWord = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -105)
+  dictBar.tooltip = '隐藏/显示字典名称'
+  dictBar.command = TOGGLE_DIC_NAME_COMMAND
   prevWord.text = '<'
-  prevWord.tooltip = '切换上一个单词'
+  prevWord.tooltip = '切换上一个单词(👈)'
   prevWord.command = PREV_WORD_COMMAND
   nextWord.text = '>'
-  nextWord.tooltip = '切换下一个单词'
+  nextWord.tooltip = '切换下一个单词(👉)'
   nextWord.command = NEXT_WORD_COMMAND
   playVoiceBar.command = PLAY_VOICE_COMMAND
   playVoiceBar.tooltip = '播放发音'
   translationBar.tooltip = '显示/隐藏中文翻译'
   translationBar.command = TOGGLE_TRANSLATION_COMMAND
-  wordBar.command = TOGGLE_DIC_NAME_COMMAND
-  wordBar.tooltip = '隐藏/显示字典名称'
+  wordBar.command = COPY_WORD_COMMAND
+  wordBar.tooltip = '复制单词到剪贴板'
 
   vscode.workspace.onDidChangeTextDocument((e) => {
     if (!pluginState.isStart) {
@@ -102,6 +106,8 @@ export function activate(context: vscode.ExtensionContext) {
         pluginState.isStart = !pluginState.isStart
         if (pluginState.isStart) {
           initializeBar()
+          vscode.commands.executeCommand('setContext', 'qwer.showTyping', true);
+          dictBar.show()
           wordBar.show()
           inputBar.show()
           playVoiceBar.show()
@@ -112,6 +118,8 @@ export function activate(context: vscode.ExtensionContext) {
             setUpReadOnlyInterval()
           }
         } else {
+          vscode.commands.executeCommand('setContext', 'qwer.showTyping', false);
+          dictBar.hide()
           wordBar.hide()
           inputBar.hide()
           playVoiceBar.hide()
@@ -161,7 +169,7 @@ export function activate(context: vscode.ExtensionContext) {
       }),
       vscode.commands.registerCommand(TOGGLE_DIC_NAME_COMMAND, () => {
         pluginState.toggleDictName()
-        wordBar.text = pluginState.getInitialWordBarContent()
+        dictBar.text = pluginState.getInitialDictBarContent()
       }),
       vscode.commands.registerCommand(PREV_WORD_COMMAND, () => {
         pluginState.prevWord()
@@ -179,10 +187,15 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.window.showInformationMessage('章节循环模式已关闭')
         }
       }),
+      vscode.commands.registerCommand(COPY_WORD_COMMAND, () => {
+        vscode.env.clipboard.writeText(pluginState.currentWord.name);
+        vscode.window.showInformationMessage(`已复制 ${pluginState.currentWord.name} 到剪贴板`);
+      })
     ],
   )
 
   function initializeBar() {
+    setUpDictBar()
     setUpWordBar()
     setUpPlayVoiceBar()
     setUpTranslationBar()
@@ -199,6 +212,9 @@ export function activate(context: vscode.ExtensionContext) {
   function setUpWordBar() {
     wordBar.text = pluginState.getInitialWordBarContent()
     playVoice()
+  }
+  function setUpDictBar() {
+    dictBar.text = pluginState.getInitialDictBarContent()
   }
   function setUpPlayVoiceBar() {
     playVoiceBar.text = pluginState.getInitialPlayVoiceBarContent()

@@ -230,8 +230,10 @@ export default class PluginState {
     this.translationVisible = !this.translationVisible
   }
   getInitialWordBarContent() {
-    const name = this.hideDictName ? '' : this.dict.name
-    return `${name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${this.wordVisibility ? this.currentWord.name : ''}`
+    return `${this.wordVisibility ? this.currentWord.name : ''}`
+  }
+  getInitialDictBarContent() {
+    return this.hideDictName ? '📕' : `${this.dict.name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}`
   }
 
   getInitialInputBarContent() {
